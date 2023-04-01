@@ -1,15 +1,38 @@
-import type { GatsbyConfig } from "gatsby"
+import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `pokedex`,
-    siteUrl: `https://www.yourdomain.tld`,
+    siteUrl: `https://www.yourdomain.tld`, // TODO: update url
   },
-  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
-  // If you use VSCode you can also use the GraphQL plugin
-  // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  plugins: [],
-}
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/locales`,
+        name: `locale`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-react-i18next`,
+      options: {
+        localeJsonSourceName: `locale`,
+        languages: ["en", `it`, `fr`],
+        defaultLanguage: `en`,
+        siteUrl: `https://example.com`, // TODO: update url
+        trailingSlash: "always",
+        i18nextOptions: {
+          interpolation: {
+            escapeValue: false,
+          },
+          supportedLngs: ["en", "it", "fr"],
+          keySeparator: false,
+          nsSeparator: false,
+        },
+      },
+    },
+  ],
+};
 
-export default config
+export default config;

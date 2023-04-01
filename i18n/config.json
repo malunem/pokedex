@@ -1,0 +1,23 @@
+[
+  {
+    "code": "en",
+    "hrefLang": "en-UK",
+    "name": "English",
+    "localName": "English",
+    "langDir": "ltr"
+  },
+  {
+    "code": "it",
+    "hrefLang": "it-IT",
+    "name": "Italian",
+    "localName": "Italiano",
+    "langDir": "ltr"
+  },
+  {
+    "code": "fr",
+    "hrefLang": "fr-FR",
+    "name": "French",
+    "localName": "Française",
+    "langDir": "ltr"
+  }
+]

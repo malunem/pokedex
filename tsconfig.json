@@ -14,11 +14,6 @@
     "strict": true /* Enable all strict type-checking options. */,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": [
-    "./src/**/*",
-    "./gatsby-node.ts",
-    "./gatsby-config.ts",
-    "./plugins/**/*",
-    "tests/index.test.tsx"
-  ]
+  "include": ["./src/**/*", "./plugins/**/*", "tests/**/*"],
+  "exclude": ["public/", "cypress/", "__mocks__"]
 }
