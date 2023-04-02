@@ -2,11 +2,14 @@ import { graphql } from "gatsby";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import type { PageProps, HeadProps } from "gatsby";
-import { Trans, useI18next } from "gatsby-plugin-react-i18next";
+import { Link, Trans, useI18next } from "gatsby-plugin-react-i18next";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
 import { NamedAPIResource, PokemonClient } from "pokenode-ts";
 import LanguageSelector from "../components/language-selector";
-import { getPokemonDetails, PokemonDetails } from "../utils/pokemon-details";
+import {
+  getPokemonDetails,
+  PokemonDetailsList,
+} from "../utils/pokemon-details";
 
 const pageStyles = {
   color: "#232129",
@@ -34,7 +37,7 @@ const doclistStyles = {
 const IndexPage: React.FC<PageProps> = () => {
   const pokemonApi = new PokemonClient();
   const [pokemonSpecies, setPokemonSpecies] = useState<NamedAPIResource[]>();
-  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails>();
+  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetailsList>();
   const i18next = useI18next();
 
   // TODO: make this data persistent
@@ -65,16 +68,16 @@ const IndexPage: React.FC<PageProps> = () => {
       <p style={paragraphStyles} />
       <ul style={doclistStyles}>
         {pokemonSpecies.map((pokemon) => {
-          const { name, description, number, genus, imageUrl } =
-            pokemonDetails[pokemon.name] ?? {};
+          const { name, imageUrl } = pokemonDetails[pokemon.name] ?? {};
           return (
             <li key={pokemon.name}>
-              <a href={pokemon.url}>{pokemon.name}</a>
-              <p>{name}</p>
-              <p>{description}</p>
-              <p>{number}</p>
-              <p>{genus}</p>
-              <img src={imageUrl ?? ""} alt={`${pokemon.name} sprite`} />
+              <Link
+                to={`/pokemon/${pokemon.name}`}
+                state={pokemonDetails[pokemon.name]}
+              >
+                <p>{name}</p>
+                <img src={imageUrl ?? ""} alt={`${pokemon.name} sprite`} />
+              </Link>
             </li>
           );
         })}

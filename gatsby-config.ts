@@ -30,6 +30,12 @@ const config: GatsbyConfig = {
           keySeparator: false,
           nsSeparator: false,
         },
+        pages: [
+          {
+            matchPath: "/:lang?/pokemon/:name",
+            getLanguageFromPath: true,
+          },
+        ],
       },
     },
   ],

@@ -1,42 +1,42 @@
-import { NamedAPIResource, PokemonClient,  } from "pokenode-ts";
+import { NamedAPIResource, PokemonClient } from "pokenode-ts";
 // import { PokemonSpecies } from "./api.d";
 
-export type PokemonDetails = Record<
-  string,
-  {
-    number: number | undefined;
-    name: string | undefined;
-    genus: string | undefined;
-    description: string | undefined;
-    imageUrl: string | null | undefined;
-  }
->;
+export type PokemonDetailsList = Record<string, PokemonDetailsItem>;
+
+export interface PokemonDetailsItem {
+  number: string | undefined;
+  name: string | undefined;
+  genus: string | undefined;
+  description: string | undefined;
+  imageUrl: string | null | undefined;
+}
+
+const formatPokemonID = (id: number) => id.toString().padStart(3, "0");
 
 export const getPokemonDetails = async (
   pokemonSpecies: NamedAPIResource[] = [],
   language = "en" // TODO: setup const default language
-): Promise<PokemonDetails> => {
-  console.log(
-    `getPokemonDetails${JSON.stringify({ language, pokemonSpecies })}`
-  );
+): Promise<PokemonDetailsList> => {
   const pokemonApi = new PokemonClient();
 
   const result = await pokemonSpecies.reduce(
-    async (pokemons: Promise<PokemonDetails>, pokemon) => {
+    async (pokemons: Promise<PokemonDetailsList>, pokemon) => {
       const pokemonObj = await pokemons;
-      const fetchedPokemonSpecies = await pokemonApi.getPokemonSpeciesByName(
-        pokemon.name
-      );
-      const awaitedPokemonSpecies = await fetchedPokemonSpecies;
-      console.log(awaitedPokemonSpecies);
-      const name = await fetchedPokemonSpecies.names.find(
+      const {
+        names,
+        id,
+        genera,
+        flavor_text_entries: flavorTextEntries,
+      } = await pokemonApi.getPokemonSpeciesByName(pokemon.name);
+
+      const name = names.find(
         (translatedName) => translatedName.language.name === language
       )?.name;
-      const number = await fetchedPokemonSpecies.id;
-      const genus = await fetchedPokemonSpecies.genera.find(
+      const number = formatPokemonID(id);
+      const genus = genera.find(
         (translatedGenus) => translatedGenus.language.name === language
       )?.genus;
-      const description = await fetchedPokemonSpecies.flavor_text_entries.find(
+      const description = flavorTextEntries.find(
         (translatedText) => translatedText.language.name === language
       )?.flavor_text;
 
@@ -46,10 +46,8 @@ export const getPokemonDetails = async (
       pokemonObj[pokemon.name] = { name, number, genus, description, imageUrl };
       return pokemonObj;
     },
-    Promise.resolve({} as PokemonDetails)
+    Promise.resolve({} as PokemonDetailsList)
   );
-
-  console.log(`getPokemonDetails${JSON.stringify({ result })}`);
 
   return result;
 };
