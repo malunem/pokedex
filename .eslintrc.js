@@ -37,6 +37,7 @@ module.exports = {
   ignorePatterns: [
     "public/",
     "cypress/",
+    "coverage/",
     "cypress.config.js",
     "__mocks__/",
     ".eslintrc.js",
