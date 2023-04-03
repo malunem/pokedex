@@ -1,0 +1,124 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const { PokemonClient } = require("pokenode-ts");
+const { getPokemonDetails } = require("./utils/pokemon-details.js");
+
+const { createRemoteFileNode } = require(`gatsby-source-filesystem`);
+
+exports.onPreInit = () => console.log("Loaded pokemon-plugin");
+
+const POKEMON_BASIC_NODE_TYPE = `PokemonBasic`;
+const POKEMON_DETAILS_NODE_TYPE = `PokemonDetails`;
+const SUPPORTED_LANGUAGES = ["en", "it", "fr"];
+
+exports.sourceNodes = async ({
+  actions,
+  createContentDigest,
+  createNodeId,
+}) => {
+  const { createNode } = actions;
+  const pokemonApi = new PokemonClient();
+
+  try {
+    const pokemonSpecies = await pokemonApi.listPokemonSpecies(0, 3);
+    const pokemons = await getPokemonDetails(
+      pokemonSpecies.results,
+      SUPPORTED_LANGUAGES
+    );
+    const data = {
+      pokemonSpecies: pokemonSpecies.results,
+      pokemons,
+    };
+
+    SUPPORTED_LANGUAGES.forEach((language) => {
+      data.pokemonSpecies.forEach((pokemonSpeciesItem) => {
+        const { name } = pokemonSpeciesItem;
+        console.log({ language, name });
+        const pokemon = data.pokemons[name];
+        createNode({
+          id: createNodeId(`${POKEMON_DETAILS_NODE_TYPE}-${language}-${name}`),
+          name,
+          language,
+          transName: pokemon.names.find(
+            (nameItem) => nameItem.language.name === language
+          ).name,
+          transDescriptions: pokemon.descriptions.filter(
+            (description) => description.language.name === language
+          ),
+          transGenus: pokemon.genera.find(
+            (genera) => genera.language.name === language
+          ),
+          internal: {
+            type: POKEMON_DETAILS_NODE_TYPE,
+            contentDigest: createContentDigest(pokemonSpeciesItem),
+          },
+        });
+      });
+    });
+
+    // loop through data and create Gatsby nodes
+    data.pokemonSpecies.forEach((pokemonSpeciesItem) => {
+      const { name } = pokemonSpeciesItem;
+      const { number, imageUrl } = data.pokemons[pokemonSpeciesItem.name];
+      console.log({ name, number, imageUrl });
+      createNode({
+        id: createNodeId(`${POKEMON_BASIC_NODE_TYPE}-${name}`),
+        name,
+        number,
+        imageUrl,
+        internal: {
+          type: POKEMON_BASIC_NODE_TYPE,
+          contentDigest: createContentDigest(pokemonSpeciesItem),
+        },
+      });
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// called each time a node is created
+exports.onCreateNode = async ({
+  node, // the node that was just created
+  actions: { createNode, createNodeField },
+  createNodeId,
+  getCache,
+}) => {
+  if (node.internal.type === POKEMON_BASIC_NODE_TYPE) {
+    console.log(node.imageUrl);
+    // the url of the remote image to generate a node for
+    const fileNode = await createRemoteFileNode({
+      url: node.imageUrl,
+      parentNodeId: node.id,
+      createNode,
+      createNodeId,
+      getCache,
+    });
+
+    if (fileNode) {
+      createNodeField({ node, name: "localFile", value: fileNode.id });
+    }
+  }
+};
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  createTypes(`
+    type PokemonBasic implements Node {
+      name: String!
+      localFile: File @link(from: "fields.localFile")
+      pokemonDetails: [PokemonDetails] @link(from: "name", by: "name")
+    }
+    type PokemonDetails implements Node {
+      name: String!
+      pokemonBasic: PokemonBasic @link(from: "name", by: "name")
+    }
+  `);
+};
+
+// TODO
+exports.onPostBuild = async ({ cache }) => {
+  await cache.set(`key`, `value`);
+  const cachedValue = await cache.get(`key`);
+  console.log(cachedValue); // logs `value`
+};
