@@ -8,6 +8,9 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     {
+      resolve: "gatsby-plugin-typescript",
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/locales`,
@@ -38,6 +41,23 @@ const config: GatsbyConfig = {
         ],
       },
     },
+    {
+      resolve: "pokemon-plugin",
+      options: {
+        path: `${__dirname}/plugins/pokemon-plugin`,
+        name: `pokemon`,
+      },
+    },
+    `gatsby-plugin-image`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          // placeholder: `blurred`,
+        },
+      },
+    },
+    `gatsby-transformer-sharp`,
   ],
 };
 

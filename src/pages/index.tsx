@@ -2,14 +2,10 @@ import { graphql } from "gatsby";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import type { PageProps, HeadProps } from "gatsby";
-import { Link, Trans, useI18next } from "gatsby-plugin-react-i18next";
+import { Link, Trans } from "gatsby-plugin-react-i18next";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
-import { NamedAPIResource, PokemonClient } from "pokenode-ts";
+import { GatsbyImage } from "gatsby-plugin-image";
 import LanguageSelector from "../components/language-selector";
-import {
-  getPokemonDetails,
-  PokemonDetailsList,
-} from "../utils/pokemon-details";
 
 const pageStyles = {
   color: "#232129",
@@ -34,30 +30,40 @@ const doclistStyles = {
   paddingLeft: 0,
 };
 
-const IndexPage: React.FC<PageProps> = () => {
-  const pokemonApi = new PokemonClient();
-  const [pokemonSpecies, setPokemonSpecies] = useState<NamedAPIResource[]>();
-  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetailsList>();
-  const i18next = useI18next();
+type IndexPageProps = PageProps<Queries.IndexPageQuery>;
+type PokemonNode = Queries.IndexPageQuery["pokemons"]["nodes"];
+
+const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
+  // const pokemonApi = new PokemonClient();
+  const [pokemons, setPokemons] = useState<PokemonNode>();
+  // const [pokemonDetails, setPokemonDetails] = useState<PokemonDetailsList>();
+  // const i18next = useI18next();
 
   // TODO: make this data persistent
-  useEffect(() => {
-    pokemonApi
-      .listPokemonSpecies(0, 3)
-      .then((data) => setPokemonSpecies(data.results))
-      .catch((error) => console.error(error));
-  }, [i18next.language]);
+  // useEffect(() => {
+  //   pokemonApi
+  //     .listPokemonSpecies(0, 3)
+  //     .then((data) => setPokemonSpecies(data.results))
+  //     .catch((error) => console.error(error));
+  // }, [i18next.language]);
+
+  // useEffect(() => {
+  //   getPokemonDetails(pokemonSpecies, i18next.language).then((data) =>
+  //     setPokemonDetails(data)
+  //   );
+  // }, [pokemonSpecies]);
 
   useEffect(() => {
-    getPokemonDetails(pokemonSpecies, i18next.language).then((data) =>
-      setPokemonDetails(data)
-    );
-  }, [pokemonSpecies]);
+    console.log(data.pokemons.nodes);
+    setPokemons(data.pokemons.nodes);
+  }, []);
 
-  if (!pokemonSpecies || pokemonSpecies.length === 0 || !pokemonDetails) {
+  if (!pokemons) {
     // TODO: setup loading component
     return <div>Loading...</div>;
   }
+
+  // const {allPokemonBasic} = data
 
   return (
     <main style={pageStyles}>
@@ -67,17 +73,29 @@ const IndexPage: React.FC<PageProps> = () => {
       </h1>
       <p style={paragraphStyles} />
       <ul style={doclistStyles}>
-        {pokemonSpecies.map((pokemon) => {
-          const { name, imageUrl } = pokemonDetails[pokemon.name] ?? {};
+        {pokemons.map((pokemon) => {
+          const { name, transName } = pokemon;
+          const { number } = pokemon.pokemonBasic ?? {};
+          const { gatsbyImageData } =
+            pokemon.pokemonBasic?.localFile?.childImageSharp ?? {};
+          // const { name, imageUrl } = pokemonDetails[pokemon.name] ?? {};
           return (
-            <li key={pokemon.name}>
-              <Link
-                to={`/pokemon/${pokemon.name}`}
-                state={pokemonDetails[pokemon.name]}
-              >
-                <p>{name}</p>
-                <img src={imageUrl ?? ""} alt={`${pokemon.name} sprite`} />
+            <li key={name}>
+              <Link to={`/pokemon/${name}`} state={pokemon}>
+                <p>
+                  {transName} - {number ?? ""}
+                </p>
               </Link>
+              {
+                // TODO: create a placeholder plugin for missing images
+                gatsbyImageData && (
+                  <GatsbyImage
+                    image={gatsbyImageData}
+                    alt={`${name} sprite`}
+                    loading="lazy"
+                  />
+                )
+              }
             </li>
           );
         })}
@@ -101,13 +119,27 @@ export const Head = ({
 );
 
 export const query = graphql`
-  query ($language: String!) {
+  query IndexPage($language: String!) {
     locales: allLocale(filter: { language: { eq: $language } }) {
       edges {
         node {
           ns
           data
           language
+        }
+      }
+    }
+    pokemons: allPokemonDetails(filter: { language: { eq: $language } }) {
+      nodes {
+        name
+        transName
+        pokemonBasic {
+          number
+          localFile {
+            childImageSharp {
+              gatsbyImageData
+            }
+          }
         }
       }
     }
