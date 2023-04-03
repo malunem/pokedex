@@ -85,7 +85,6 @@ exports.onCreateNode = async ({
   getCache,
 }) => {
   if (node.internal.type === POKEMON_BASIC_NODE_TYPE) {
-    console.log(node.imageUrl);
     // the url of the remote image to generate a node for
     const fileNode = await createRemoteFileNode({
       url: node.imageUrl,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, HeadFC, PageProps } from "gatsby";
+import { Link, HeadFC, PageProps, graphql } from "gatsby";
 
 const pageStyles = {
   color: "#232129",
@@ -45,3 +45,17 @@ const NotFoundPage: React.FC<PageProps> = () => (
 export default NotFoundPage;
 
 export const Head: HeadFC = () => <title>Not found</title>;
+
+export const query = graphql`
+  query ErrorPage($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`;

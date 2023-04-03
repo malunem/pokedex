@@ -34,24 +34,7 @@ type IndexPageProps = PageProps<Queries.IndexPageQuery>;
 type PokemonNode = Queries.IndexPageQuery["pokemons"]["nodes"];
 
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
-  // const pokemonApi = new PokemonClient();
   const [pokemons, setPokemons] = useState<PokemonNode>();
-  // const [pokemonDetails, setPokemonDetails] = useState<PokemonDetailsList>();
-  // const i18next = useI18next();
-
-  // TODO: make this data persistent
-  // useEffect(() => {
-  //   pokemonApi
-  //     .listPokemonSpecies(0, 3)
-  //     .then((data) => setPokemonSpecies(data.results))
-  //     .catch((error) => console.error(error));
-  // }, [i18next.language]);
-
-  // useEffect(() => {
-  //   getPokemonDetails(pokemonSpecies, i18next.language).then((data) =>
-  //     setPokemonDetails(data)
-  //   );
-  // }, [pokemonSpecies]);
 
   useEffect(() => {
     console.log(data.pokemons.nodes);
@@ -62,8 +45,6 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
     // TODO: setup loading component
     return <div>Loading...</div>;
   }
-
-  // const {allPokemonBasic} = data
 
   return (
     <main style={pageStyles}>
@@ -78,10 +59,9 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
           const { number } = pokemon.pokemonBasic ?? {};
           const { gatsbyImageData } =
             pokemon.pokemonBasic?.localFile?.childImageSharp ?? {};
-          // const { name, imageUrl } = pokemonDetails[pokemon.name] ?? {};
           return (
             <li key={name}>
-              <Link to={`/pokemon/${name}`} state={pokemon}>
+              <Link to={`/pokemon/${name}`}>
                 <p>
                   {transName} - {number ?? ""}
                 </p>

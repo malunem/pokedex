@@ -42,6 +42,7 @@ module.exports = {
     "__mocks__/",
     ".eslintrc.js",
     "gatsby-config.ts",
+    "gatsby-node.ts",
     "jest-preprocess.js",
     "jest.config.js",
     "loadershim.js",

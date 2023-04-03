@@ -25,6 +25,7 @@ const config: GatsbyConfig = {
         defaultLanguage: `en`,
         siteUrl: `https://example.com`, // TODO: update url
         trailingSlash: "always",
+        generateDefaultLanguagePage: true,
         i18nextOptions: {
           interpolation: {
             escapeValue: false,
@@ -35,7 +36,7 @@ const config: GatsbyConfig = {
         },
         pages: [
           {
-            matchPath: "/:lang?/pokemon/:name",
+            matchPath: "/:lang/pokemon/:name",
             getLanguageFromPath: true,
           },
         ],

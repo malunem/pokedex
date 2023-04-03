@@ -6,7 +6,7 @@ type PokemonPageProps = PageProps<Queries.PokemonPageQuery>
 
 const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
   const { name, transName, transDescriptions, transGenus, pokemonBasic } =
-    data?.pokemon ?? {};
+    data.pokemon ?? {};
   const { number, localFile } = pokemonBasic ?? {};
   const { gatsbyImageData } = localFile?.childImageSharp ?? {};
   return (
@@ -19,7 +19,7 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
         <GatsbyImage
           image={gatsbyImageData}
           alt={`${name} sprite`}
-        ></GatsbyImage>
+         />
       )}
     </p>
   );
