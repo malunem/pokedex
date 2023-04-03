@@ -47,7 +47,7 @@ exports.sourceNodes = async ({
           ),
           transGenus: pokemon.genera.find(
             (genera) => genera.language.name === language
-          ),
+          ).genus,
           internal: {
             type: POKEMON_DETAILS_NODE_TYPE,
             contentDigest: createContentDigest(pokemonSpeciesItem),
