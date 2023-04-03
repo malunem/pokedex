@@ -18,6 +18,11 @@
     "strictNullChecks": true,
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["./src/**/*", "./plugins/**/*", "tests/**/*"],
+  "include": [
+    "./src/**/*",
+    "@types/**/*",
+    "./plugins/**/*",
+    "tests/**/*",
+  ],
   "exclude": ["public/", "cypress/", "__mocks__"]
 }

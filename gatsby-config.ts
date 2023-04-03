@@ -59,6 +59,34 @@ const config: GatsbyConfig = {
       },
     },
     `gatsby-transformer-sharp`,
+    {
+      resolve: "gatsby-plugin-flexsearch",
+      options: {
+        name: "pokemon-search",
+        languages: ["en", "it", "fr"],
+        type: "PokemonDetails",
+        fields: [
+          {
+            name: "name",
+            indexed: false,
+            resolver: "name",
+            store: true,
+          },
+          {
+            name: "transName",
+            indexed: true,
+            resolver: "transName",
+            store: true,
+          },
+          {
+            name: "language",
+            indexed: false,
+            resolver: "language",
+            store: true,
+          },
+        ],
+      },
+    },
   ],
 };
 

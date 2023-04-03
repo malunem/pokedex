@@ -53,6 +53,7 @@ module.exports = {
       "error",
       { namedComponents: "arrow-function" },
     ],
+    "no-underscore-dangle": ["error", { allow: ["__FLEXSEARCH__"] }],
   },
   settings: {
     "import/extensions": [".tsx"],

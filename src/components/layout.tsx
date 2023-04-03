@@ -1,5 +1,7 @@
+import { Link } from "gatsby-plugin-react-i18next";
 import React from "react";
 import LanguageSelector from "./language-selector";
+import Search from "./search";
 
 const pageStyles = {
   color: "#232129",
@@ -13,7 +15,11 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => (
     <main style={pageStyles}>
-      <LanguageSelector siteTitle="Pokedex" />
+      <header className="main-header">
+      <Link to="/">Home</Link>
+      <LanguageSelector />
+      <Search classNames="" />
+      </header>
       {children}
     </main>
   );

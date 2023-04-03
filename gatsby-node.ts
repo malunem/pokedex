@@ -21,7 +21,7 @@ export const createPages = async ({ graphql, actions }) => {
     }
   `);
 
-  result.data.allPokemonBasic.edges.forEach(({ node }) => {
+  result.data?.allPokemonBasic.edges.forEach(({ node }) => {
     console.log(node);
     createPage({
       path: `/pokemon/${node.name}`,

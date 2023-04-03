@@ -27,11 +27,11 @@
   "dependencies": {
     "@testing-library/cypress": "^9.0.0",
     "@testing-library/jest-dom": "^5.16.5",
-    "axios": "^1.3.4",
     "axios-cache-interceptor": "^1.0.1",
     "babel-jest": "^29.5.0",
     "cypress-axe": "^1.4.0",
     "gatsby": "^5.8.1",
+    "gatsby-plugin-flexsearch": "^1.0.3",
     "gatsby-plugin-image": "^3.8.0",
     "gatsby-plugin-react-i18next": "^3.0.1",
     "gatsby-plugin-sharp": "^5.8.1",

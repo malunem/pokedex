@@ -6,7 +6,7 @@ import { Trans } from "gatsby-plugin-react-i18next";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
 import PokemonCard from "../components/pokemon-card";
 import Layout from "../components/layout";
-import { PokemonNode } from "../utils/types";
+import { PokemonNode } from "../../@types/globals";
 
 const headingStyles = {
   marginTop: 0,
@@ -24,7 +24,6 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
   const [pokemons, setPokemons] = useState<PokemonNode>();
 
   useEffect(() => {
-    console.log(data.pokemons.nodes);
     setPokemons(data.pokemons.nodes);
   }, []);
 
@@ -49,14 +48,13 @@ export default IndexPage;
 type DataProps = object;
 
 export const Head = ({
-  pageContext
+  pageContext,
 }: HeadProps<DataProps, PageContext>): JSX.Element => (
   <>
     <html lang={pageContext.language} />
     <title>Home Page</title>
   </>
 );
-
 
 export const query = graphql`
   query IndexPage($language: String!) {

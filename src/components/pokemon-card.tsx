@@ -1,7 +1,7 @@
 import { GatsbyImage } from "gatsby-plugin-image";
 import { Link } from "gatsby-plugin-react-i18next";
 import React from "react";
-import { PokemonNode } from "../utils/types";
+import { PokemonNode } from "../../@types/globals";
 
 interface PokemonCardProps {
   pokemon: PokemonNode[0];
