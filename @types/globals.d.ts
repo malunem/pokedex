@@ -26,11 +26,13 @@ type Results = number[];
 
 declare global {
   interface Window {
-    __FLEXSEARCH__: {
-      [key in SUPPORTED_LANGUAGES]: {
-        index: Index; // flexsearch index instance
-        store: Store; // object where the key is a gatsby node ID and value is a collection of field values
-      };
-    };
+    __FLEXSEARCH__:
+      | {
+          [key in SUPPORTED_LANGUAGES]: {
+            index: Index; // flexsearch index instance
+            store: Store; // object where the key is a gatsby node ID and value is a collection of field values
+          };
+        }
+      | undefined;
   }
 }

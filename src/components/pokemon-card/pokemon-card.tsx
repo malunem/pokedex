@@ -1,9 +1,9 @@
 import { GatsbyImage } from "gatsby-plugin-image";
 import { Link } from "gatsby-plugin-react-i18next";
 import React from "react";
-import { PokemonNode } from "../../@types/globals";
+import { PokemonNode } from "../../../@types/globals";
 
-interface PokemonCardProps {
+export interface PokemonCardProps {
   pokemon: PokemonNode[0];
 }
 
@@ -13,12 +13,10 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
   const { gatsbyImageData } =
     pokemon.pokemonBasic?.localFile?.childImageSharp ?? {};
   return (
-    <li key={name}>
-      <Link to={`/pokemon/${name}`}>
-        <p>
-          {transName} - {number ?? ""}
-        </p>
-      </Link>
+    <Link to={`/pokemon/${name}`}>
+      <p>
+        {transName} - {number ?? ""}
+      </p>
       {
         // TODO: create a placeholder plugin for missing images
         gatsbyImageData && (
@@ -29,7 +27,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
           />
         )
       }
-    </li>
+    </Link>
   );
 };
 

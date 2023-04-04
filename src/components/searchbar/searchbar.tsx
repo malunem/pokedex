@@ -1,14 +1,14 @@
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import React, { useState } from "react";
-import { Node } from "../../@types/globals";
+import { Node } from "../../../@types/globals";
 
-interface SearchProps {
+export interface SearchProps {
   classNames: string;
 }
 
 const getSearchResults = (query: string, language: string) => {
-  const { index } = window.__FLEXSEARCH__[language];
-  const { store } = window.__FLEXSEARCH__[language];
+  const { index } = window.__FLEXSEARCH__?.[language] ?? {};
+  const { store } = window.__FLEXSEARCH__?.[language] ?? {};
   if (!index) {
     return [];
   }
@@ -40,15 +40,17 @@ interface ResultListProps {
 const ResultList: React.FC<ResultListProps> = ({ query, results }) => {
   if (results.length > 0) {
     return (
-      <>
+      <ul>
         {results.map((result) => (
           <div className="item-search" key={`search-${result.name}`}>
             <Link to={`/pokemon/${result.name}`}>
-              <h4>{result.transName}</h4>
+              <li aria-label={`search-result-${result.transName}`}>
+                {result.transName}
+              </li>
             </Link>
           </div>
         ))}
-      </>
+      </ul>
     );
   }
   if (query.length > 0) {

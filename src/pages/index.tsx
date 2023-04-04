@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import type { PageProps } from "gatsby";
 import { Trans } from "gatsby-plugin-react-i18next";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
-import PokemonCard from "../components/pokemon-card";
-import Layout from "../components/layout";
+import PokemonCard from "../components/pokemon-card/pokemon-card";
+import Layout from "../components/layout/layout";
 import { PokemonNode } from "../../@types/globals";
 
 const headingStyles = {
@@ -35,7 +35,9 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
         </h1>
         <ul style={doclistStyles}>
           {pokemons?.map((pokemon) => (
-            <PokemonCard pokemon={pokemon} />
+            <li key={pokemon.name}>
+              <PokemonCard pokemon={pokemon} />
+            </li>
           ))}
         </ul>
       </>

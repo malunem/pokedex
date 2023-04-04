@@ -2,7 +2,7 @@ import { graphql, HeadProps, PageProps } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
 import React from "react";
-import Layout from "../components/layout";
+import Layout from "../components/layout/layout";
 
 type PokemonPageProps = PageProps<Queries.PokemonPageQuery>;
 
@@ -28,14 +28,13 @@ export default PokemonPage;
 type DataProps = object;
 
 export const Head = ({
-  pageContext
+  pageContext,
 }: HeadProps<DataProps, PageContext>): JSX.Element => (
   <>
     <html lang={pageContext.language} />
     <title>Pokemon Details</title>
   </>
 );
-
 
 export const query = graphql`
   query PokemonPage($language: String!, $pokemonName: String!) {
