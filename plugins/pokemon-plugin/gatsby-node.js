@@ -20,7 +20,7 @@ exports.sourceNodes = async ({
   const pokemonApi = new PokemonClient();
 
   try {
-    const pokemonSpecies = await pokemonApi.listPokemonSpecies(0, 3);
+    const pokemonSpecies = await pokemonApi.listPokemonSpecies(0, 200);
     const pokemons = await getPokemonDetails(
       pokemonSpecies.results,
       SUPPORTED_LANGUAGES
@@ -33,7 +33,6 @@ exports.sourceNodes = async ({
     SUPPORTED_LANGUAGES.forEach((language) => {
       data.pokemonSpecies.forEach((pokemonSpeciesItem) => {
         const { name } = pokemonSpeciesItem;
-        console.log({ language, name });
         const pokemon = data.pokemons[name];
         createNode({
           id: createNodeId(`${POKEMON_DETAILS_NODE_TYPE}-${language}-${name}`),
@@ -60,7 +59,6 @@ exports.sourceNodes = async ({
     data.pokemonSpecies.forEach((pokemonSpeciesItem) => {
       const { name } = pokemonSpeciesItem;
       const { number, imageUrl } = data.pokemons[pokemonSpeciesItem.name];
-      console.log({ name, number, imageUrl });
       createNode({
         id: createNodeId(`${POKEMON_BASIC_NODE_TYPE}-${name}`),
         name,
