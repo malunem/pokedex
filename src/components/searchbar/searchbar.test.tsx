@@ -10,7 +10,7 @@ const makeSut = ({ classNames }: Partial<SearchbarProps>) =>
 expect.extend(toHaveNoViolations);
 
 describe("Search", () => {
-  test("should have no accessibility violations", async () => {
+  it("should have no accessibility violations", async () => {
     const { container } = makeSut({
       classNames: "",
     });

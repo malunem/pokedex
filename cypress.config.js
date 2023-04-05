@@ -1,6 +1,10 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  scripts: {
+    start: "gatsby develop",
+    "cy:run": "echo 'pippo' && npm run start & cypress run",
+  },
   e2e: {
     baseUrl: "http://localhost:8000",
     specPattern: "cypress/e2e",

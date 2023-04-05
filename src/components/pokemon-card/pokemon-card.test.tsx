@@ -20,7 +20,7 @@ const makeSut = ({ pokemon }: Partial<PokemonCardProps>) =>
   render(<PokemonCard pokemon={pokemon ?? pokemonMock} />);
 
 describe("<PokemonCard />", () => {
-  test("should have no accessibility violations", async () => {
+  it("should have no accessibility violations", async () => {
     const { container } = makeSut({
       pokemon: {
         transName: "Bulbasaur",
@@ -33,7 +33,7 @@ describe("<PokemonCard />", () => {
     expect(results).toHaveNoViolations();
   });
 
-  test("Should render pokemon data correctly", () => {
+  it("Should render pokemon data correctly", () => {
     const { getByText, getByRole } = makeSut({
       pokemon: {
         transName: "Bulbasaur",
@@ -47,7 +47,7 @@ describe("<PokemonCard />", () => {
     expect(getByRole("link")).toHaveAttribute("href", "/pokemon/bulbasaur");
   });
 
-  test("Should render pokemon without number", () => {
+  it("Should render pokemon without number", () => {
     const { getByText, getByRole } = makeSut({
       pokemon: {
         transName: "Bulbasaur",

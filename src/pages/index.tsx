@@ -35,7 +35,7 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
         </h1>
         <ul style={doclistStyles}>
           {pokemons?.map((pokemon) => (
-            <li key={pokemon.name}>
+            <li key={pokemon.name} className="pokemon-basic">
               <PokemonCard pokemon={pokemon} />
             </li>
           ))}

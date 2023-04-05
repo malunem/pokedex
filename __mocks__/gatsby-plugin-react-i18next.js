@@ -10,7 +10,7 @@ export const useI18next = () => {
     originalPath: "/",
   };
 };
-// these props are invalid for an `a` tag
+
 const mockLink = ({
   activeClassName,
   activeStyle,

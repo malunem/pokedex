@@ -13,12 +13,20 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
   const { gatsbyImageData } = localFile?.childImageSharp ?? {};
   return (
     <Layout>
-      <h1>{transName}</h1>
-      <p>{number}</p>
-      <p>{transDescriptions?.[0]?.flavor_text ?? "no description"}</p>
-      <p>{transGenus}</p>
+      <h1 id={name} className="pokemon-name">
+        {transName}
+      </h1>
+      <p className="pokemon-number">{number}</p>
+      <p className="pokemon-description">
+        {transDescriptions?.[0]?.flavor_text ?? "no description"}
+      </p>
+      <p className="pokemon-genus">{transGenus}</p>
       {gatsbyImageData && (
-        <GatsbyImage image={gatsbyImageData} alt={`${name} sprite`} />
+        <GatsbyImage
+          className="pokemon-sprite"
+          image={gatsbyImageData}
+          alt={`${name} sprite`}
+        />
       )}
     </Layout>
   );

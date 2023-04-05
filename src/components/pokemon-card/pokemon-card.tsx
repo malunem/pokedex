@@ -13,7 +13,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
   const { gatsbyImageData } =
     pokemon.pokemonBasic?.localFile?.childImageSharp ?? {};
   return (
-    <Link to={`/pokemon/${name}`}>
+    <Link id={name} to={`/pokemon/${name}`}>
       <p>
         {transName} - {number ?? ""}
       </p>
@@ -24,6 +24,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
             image={gatsbyImageData}
             alt={`${name} sprite`}
             loading="lazy"
+            className="pokemon-sprite"
           />
         )
       }

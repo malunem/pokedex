@@ -8,21 +8,23 @@
     "gatsby"
   ],
   "scripts": {
+    "test": "npm run --silent all-tests",
     "develop": "gatsby develop",
     "start": "gatsby develop",
-    "build": "gatsby build",
+    "build": "npm test && gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "prepare": "husky install",
     "cy:open": "cypress open",
+    "cy:run": "cypress run --quiet",
     "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
-    "test": "npm run --silent all-tests",
-    "all-tests": "echo '\n🔒 Starting tests...\n' && npm run pretty-quick && npm run typecheck && npm run linter && npm run jest-test && echo '\n🔥 All tests passed!\n'",
+    "all-tests": "echo '\n🔒 Starting tests...\n' && npm run pretty-quick && npm run typecheck && npm run linter && npm run jest-test && npm run cypress-test && echo '\n🔥 All tests passed!\n'",
     "pretty-quick": "echo '\n🧪 Testing code formatting...' && pretty-quick",
     "typecheck": "echo '\n🧪 Testing TypeScript compiling...' && tsc --noEmit && echo '✅ TypeScript compiled!'",
     "linter": "echo '\n🧪 Testing code patterns...' && npx eslint --fix . && echo '✅ Code patterns checked!'",
     "jest-test": "echo '\n🧪 Running unit tests...' && jest --coverage ",
-    "cypress-test": "echo '\n🧪 Running end-to-end tests...' && npx cypress run --quiet"
+    "cypress-test": "echo '\n🧪 Running end-to-end tests...' && start-server-and-test develop http://localhost:8000 cy:run",
+    "pre-commit": "npm run pretty-quick && npm run typecheck && npm run linter"
   },
   "dependencies": {
     "@testing-library/cypress": "^9.0.0",

@@ -9,14 +9,14 @@ const { languages } = useI18next();
 expect.extend(toHaveNoViolations);
 
 describe("LanguageSelector", () => {
-  test("should have no accessibility violations", async () => {
+  it("should have no accessibility violations", async () => {
     const { container } = render(<LanguageSelector />);
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
-  test("renders all languages", () => {
+  it("renders all languages", () => {
     render(<LanguageSelector />);
 
     const languageLinks = screen.getAllByRole("listitem");

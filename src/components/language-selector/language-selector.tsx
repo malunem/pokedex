@@ -10,8 +10,8 @@ const LanguageSelector = () => {
   return (
     <ul id="language-selector" aria-label="languages">
       {languages.map((lng) => (
-        <li id={lng} key={lng}>
-          <Link to={originalPath} language={lng}>
+        <li key={lng}>
+          <Link id={lng} to={originalPath} language={lng}>
             {lng}
           </Link>
         </li>

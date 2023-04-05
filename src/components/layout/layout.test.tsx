@@ -8,7 +8,7 @@ const TestChildren = () => <div>test children</div>;
 expect.extend(toHaveNoViolations);
 
 describe("Layout", () => {
-  test("should have no accessibility violations", async () => {
+  it("should have no accessibility violations", async () => {
     const { container } = render(
       <Layout>
         <TestChildren />
@@ -19,7 +19,7 @@ describe("Layout", () => {
     expect(results).toHaveNoViolations();
   });
 
-  test("renders all layout components", () => {
+  it("renders all layout components", () => {
     const { getByText, getByRole } = render(
       <Layout>
         <TestChildren />
