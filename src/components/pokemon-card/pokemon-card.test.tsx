@@ -7,26 +7,23 @@ import PokemonCard, { PokemonCardProps } from "./pokemon-card";
 
 expect.extend(toHaveNoViolations);
 
-const pokemonMock = {
-  name: "Pikachu",
-  transName: "PikachuTranslated",
+const mockPokemon = {
+  name: "bulbasaur",
+  transName: "Bulbasaur",
   pokemonBasic: {
+    color: "green",
     number: "123",
-    localFile: null,
-  },
+    localFile: null
+  }
 };
 
 const makeSut = ({ pokemon }: Partial<PokemonCardProps>) =>
-  render(<PokemonCard pokemon={pokemon ?? pokemonMock} />);
+  render(<PokemonCard pokemon={pokemon ?? mockPokemon} />);
 
 describe("<PokemonCard />", () => {
   it("should have no accessibility violations", async () => {
     const { container } = makeSut({
-      pokemon: {
-        transName: "Bulbasaur",
-        name: "bulbasaur",
-        pokemonBasic: { number: null, localFile: null },
-      },
+      pokemon: mockPokemon
     });
 
     const results = await axe(container);
@@ -35,11 +32,7 @@ describe("<PokemonCard />", () => {
 
   it("Should render pokemon data correctly", () => {
     const { getByText, getByRole } = makeSut({
-      pokemon: {
-        transName: "Bulbasaur",
-        name: "bulbasaur",
-        pokemonBasic: { number: "123", localFile: null },
-      },
+      pokemon: mockPokemon
     });
 
     expect(getByText(/Bulbasaur/)).toBeInTheDocument();
@@ -49,11 +42,7 @@ describe("<PokemonCard />", () => {
 
   it("Should render pokemon without number", () => {
     const { getByText, getByRole } = makeSut({
-      pokemon: {
-        transName: "Bulbasaur",
-        name: "bulbasaur",
-        pokemonBasic: { number: null, localFile: null },
-      },
+      pokemon: mockPokemon
     });
 
     expect(getByText(/Bulbasaur/)).toBeInTheDocument();

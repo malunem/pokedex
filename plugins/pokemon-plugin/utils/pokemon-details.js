@@ -15,6 +15,7 @@ exports.getPokemonDetails = async (
   const result = await pokemonSpecies.reduce(async (pokemons, pokemon) => {
     const pokemonList = await pokemons;
     const {
+      color,
       names,
       id,
       genera,
@@ -44,6 +45,7 @@ exports.getPokemonDetails = async (
       genera: filteredGenus,
       descriptions: filteredDescriptions,
       imageUrl,
+      color: color.name
     };
     return pokemonList;
   }, Promise.resolve({}));

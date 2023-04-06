@@ -1,27 +1,67 @@
+import {
+  Box,
+  Flex,
+  IconButton,
+  Spacer,
+  Text,
+  useBreakpointValue
+} from "@chakra-ui/react";
 import { Link } from "gatsby-plugin-react-i18next";
 import React from "react";
+import { IconPokeball } from "@tabler/icons-react";
 import LanguageSelector from "../language-selector/language-selector";
 import Search from "../searchbar/searchbar";
-
-const pageStyles = {
-  color: "#232129",
-  padding: 96,
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-};
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => (
-  <main style={pageStyles}>
-    <header className="main-header">
-      <Link to="/">Home</Link>
-      <LanguageSelector />
-      <Search classNames="searchbar" />
-    </header>
-    {children}
-  </main>
-);
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const isMobile = useBreakpointValue({
+    base: true,
+    lg: false,
+    ssr: true
+  });
+
+  return (
+    <>
+      <Flex
+        as="header"
+        w="100%"
+        h="75px"
+        px={4}
+        mb={10}
+        className="main-header"
+        justifyContent="center"
+        alignItems="center"
+        borderBottom="1px"
+        borderColor="gray.200"
+      >
+        <Link to="/">
+          <IconButton
+            id="home"
+            aria-label="home-button"
+            icon={<IconPokeball />}
+          />
+        </Link>
+        <Spacer />
+        <Text
+          fontSize={{ base: "2xl", lg: "5xl" }}
+          color="pokemonBlue"
+          fontWeight="black"
+        >
+          Pokédex
+        </Text>
+        <Spacer />
+        {isMobile && <Search classNames="search-mobile" />}
+        <LanguageSelector />
+      </Flex>
+      <Box as="main" px="5" pb="10">
+        {!isMobile && <Search classNames="search-desktop" />}
+        {children}
+      </Box>
+    </>
+  );
+};
 
 export default Layout;

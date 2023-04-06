@@ -1,4 +1,6 @@
-import { Link, useI18next } from "gatsby-plugin-react-i18next";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import { useI18next } from "gatsby-plugin-react-i18next";
 import React from "react";
 
 export interface LanguageSelectorProps {
@@ -6,17 +8,32 @@ export interface LanguageSelectorProps {
 }
 
 const LanguageSelector = () => {
-  const { languages, originalPath } = useI18next();
+  const { languages, changeLanguage, language } = useI18next();
   return (
-    <ul id="language-selector" aria-label="languages">
-      {languages.map((lng) => (
-        <li key={lng}>
-          <Link id={lng} to={originalPath} language={lng}>
-            {lng}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <Menu id="language-selector" aria-label="languages">
+      <MenuButton
+        as={Button}
+        // maxW="50px"
+        // bgColor="blue"
+        rightIcon={<ChevronDownIcon />}
+      >
+        {language.toUpperCase() }
+      </MenuButton>
+      <MenuList maxW="100px">
+        {languages.map((lng) => (
+          <MenuItem
+            id={lng}
+            key={lng}
+            value={lng}
+            onClick={() => {
+              changeLanguage(lng);
+            }}
+          >
+            {lng.toUpperCase()}
+          </MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
   );
 };
 

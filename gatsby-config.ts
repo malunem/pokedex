@@ -54,7 +54,8 @@ const config: GatsbyConfig = {
       resolve: `gatsby-plugin-sharp`,
       options: {
         defaults: {
-          // placeholder: `blurred`,
+          backgroundColor: `transparent`,
+          placeholder: `blurred`,
         },
       },
     },

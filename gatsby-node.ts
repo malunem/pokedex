@@ -10,6 +10,7 @@ export const createPages = async ({ graphql, actions }) => {
           node {
             name
             number
+            color
             localFile {
               childImageSharp {
                 gatsbyImageData
