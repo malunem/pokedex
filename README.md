@@ -18,7 +18,7 @@ The website is publicly deployed on Gatsby Cloud at this address: https://pokede
     All you have to do to have the project up and running on your machine is to run the following command on terminal. The only requirement is having Docker installed.
 
     ```shell
-    git clone git@github.com:malunem/pokedex.git && cd pokedex && docker build -t pokedex . && docker run -p 8000:8000 pokedex
+    git clone git@github.com:malunem/pokedex.git && cd pokedex && docker-compose up develop
     ```
 
     At the end, you will be promped to view the website at http://localhost:8000
@@ -26,7 +26,7 @@ The website is publicly deployed on Gatsby Cloud at this address: https://pokede
     After the first run, you can restart it with:
 
     ```bash
-    docker run -p 8000:8000 pokedex
+    docker-compose up develop
     ```
 
 2.  **Run tests**
