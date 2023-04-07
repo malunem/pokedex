@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-console */
 
 const { PokemonClient } = require("pokenode-ts");
 
@@ -26,11 +27,9 @@ exports.callApiWithRetry = async (apiCall, pokemonName, retries = 0) => {
       default:
         throw new Error(`${apiCall} not supported`);
     }
-    // resolve(response);
     const data = await response;
     return data;
   } catch (error) {
-    // reject();
     const delay = (retries + 1) * 100;
     console.log(
       `Error fetching data (${error.message}). Retrying in ${delay}ms...`

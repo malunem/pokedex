@@ -3,7 +3,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import type { PageProps } from "gatsby";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
-import { Heading, SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import PokemonCard from "../components/pokemon-card/pokemon-card";
 import { PokemonNode } from "../../@types/globals";

@@ -34,20 +34,18 @@ describe("Search", () => {
 
   it("shows no results if pokemon doesn't exist in index", () => {
     const { getByText, getByRole } = makeSut();
-    
+
     const searchButton = getByRole("button");
-    
+
     // open search modal
     fireEvent.click(searchButton);
     const searchInput = getByRole("textbox");
     expect(searchInput).toBeTruthy();
-    
+
     // search charizard, which is not in the website
     const mockUserInput = "charizard";
-    if (searchInput) {
-      fireEvent.change(searchInput, { target: { value: mockUserInput } });
+    fireEvent.change(searchInput, { target: { value: mockUserInput } });
 
-      expect(getByText(`0 results-for "${mockUserInput}"`)).toBeInTheDocument();
-    }
+    expect(getByText(`0 results-for "${mockUserInput}"`)).toBeInTheDocument();
   });
 });
