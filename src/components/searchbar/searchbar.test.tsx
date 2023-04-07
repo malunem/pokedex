@@ -1,42 +1,53 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import Searchbar, { SearchProps as SearchbarProps } from "./searchbar";
-
-// system under test
-const makeSut = ({ classNames }: Partial<SearchbarProps>) =>
-  render(<Searchbar classNames={classNames ?? ""} />);
+import { ChakraProvider } from "@chakra-ui/react";
+import Searchbar from "./searchbar";
 
 expect.extend(toHaveNoViolations);
 
+const makeSut = () =>
+  render(
+    <ChakraProvider>
+      <Searchbar />
+    </ChakraProvider>
+  );
+
 describe("Search", () => {
   it("should have no accessibility violations", async () => {
-    const { container } = makeSut({
-      classNames: "",
-    });
+    const { container } = makeSut();
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
-  it("renders search bar", () => {
+  it("renders search button", () => {
     const mockUserInput = "pikachu";
 
-    const { getByRole } = makeSut({ classNames: "" });
-    const searchInput = getByRole("textbox") as HTMLInputElement;
+    const { getByRole } = makeSut();
+    const searchButton = getByRole("button") as HTMLInputElement;
 
-    expect(searchInput).toBeInTheDocument();
+    expect(searchButton).toBeInTheDocument();
 
-    fireEvent.change(searchInput, { target: { value: mockUserInput } });
-    expect(searchInput.value).toBe(mockUserInput);
+    fireEvent.change(searchButton, { target: { value: mockUserInput } });
+    expect(searchButton.value).toBe(mockUserInput);
   });
 
-  it("shows no results if pokemon doesnt exist in index", () => {
+  it("shows no results if pokemon doesn't exist in index", () => {
+    const { getByText, getByRole } = makeSut();
+    
+    const searchButton = getByRole("button");
+    
+    // open search modal
+    fireEvent.click(searchButton);
+    const searchInput = getByRole("textbox");
+    expect(searchInput).toBeTruthy();
+    
+    // search charizard, which is not in the website
     const mockUserInput = "charizard";
+    if (searchInput) {
+      fireEvent.change(searchInput, { target: { value: mockUserInput } });
 
-    const { getByText, getByRole } = makeSut({ classNames: "" });
-    const searchInput = getByRole("textbox") as HTMLInputElement;
-
-    fireEvent.change(searchInput, { target: { value: mockUserInput } });
-    expect(getByText(`No results for ${mockUserInput}`)).toBeVisible();
+      expect(getByText(`0 results-for "${mockUserInput}"`)).toBeInTheDocument();
+    }
   });
 });

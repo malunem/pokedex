@@ -1,49 +1,74 @@
 <p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
+  <a href="https://pokedex71596.gatsbyjs.io/">
+    <img alt="Gatsby" src="./static/favicon.png" width="60" />
   </a>
 </p>
 <h1 align="center">
-  Gatsby Minimal TypeScript Starter
+  Pokédex
 </h1>
+
+## ✨ Deployed website
+
+The website is publicly deployed on Gatsby Cloud at this address: https://pokedex71596.gatsbyjs.io/
 
 ## 🚀 Quick start
 
-1.  **Create a Gatsby site.**
+1.  **Run on localhost**
 
-    Use the Gatsby CLI to create a new site, specifying the minimal TypeScript starter.
-
-    ```shell
-    # create a new Gatsby site using the minimal TypeScript starter
-    npm init gatsby -- -ts
-    ```
-
-2.  **Start developing.**
-
-    Navigate into your new site’s directory and start it up.
+    All you have to do to have the project up and running on your machine is to run the following command on terminal. The only requirement is having Docker installed.
 
     ```shell
-    cd my-gatsby-site/
-    npm run develop
+    git clone git@github.com:malunem/pokedex.git && cd pokedex && docker build -t pokedex . && docker run -p 8000:8000 pokedex
     ```
 
-3.  **Open the code and start customizing!**
+    At the end, you will be promped to view the website at http://localhost:8000
 
-    Your site is now running at http://localhost:8000!
+2.  **Run tests**
 
-    Edit `src/pages/index.tsx` to see your site update in real-time!
+    Navigate into the project root directory and run the command:
 
-4.  **Learn more**
+    ```shell
+    npm test
+    ```
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+    This will execute:
 
-## 🚀 Quick start (Netlify)
+    - prettier (with pretty-quick) - to check style and indentation consistency
+    - tsc (strict mode) - to verify that typescript compiles correctly
+    - eslint (with AirBnb configs and some custom rules) - to ensure best practices and code quality
+    - jest (with coverage report) - for unit tests on components
+    - cypress (running headlessly) - for end to end tests on pages
 
-Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
+    End to end tests could also be run with Cypress opened:
 
-[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
+    ```bash
+    npm run cy:open
+    ```
+
+3.  **Build for production**
+
+    You can start a production build by running the following command. This will build the project for production after running all the tests, only if they pass.
+
+    ```bash
+    npm run build
+    ```
+
+4.  **Deploy**
+
+    The project is automatically deployed when the `main` branch is updated.
+
+## 📘 About
+
+The website is built with a mobile-first approach, with responsiveness for all devices. It uses `ChakraUI` components, that support accessibility.
+
+Images are handled with lazy loading and a blurred version is showed during loading.
+
+Internationalization is managed with `i18next` plugin for English, French and Italian.
+
+It's possibile to search Pokémons by name. Index and research engine are provided by the plugin `gatsby-plugin-flexsearch`. It is configured to allow searching by Pokémon translated names (in French a lot of names are different).
+
+All Pokémon data is fetched at build time with REST APIs by the custom plugin `pokemon-plugin` which can be found in `/plugins/`.
+
+All pages are created at build time. The project contains 200 Pokémons.
+
+If Pokémon REST APIs return errors or there is some network issue, the plugin retries to fetch data recursively with increasing delay, to ensure the website is never built without data. 

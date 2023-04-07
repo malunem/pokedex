@@ -1,6 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+  projectId: "rp7pqn",
   scripts: {
     start: "gatsby develop",
     "cy:run": "echo 'pippo' && npm run start & cypress run",

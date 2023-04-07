@@ -14,15 +14,12 @@ import {
   useDisclosure,
   Text,
   useBreakpointValue,
-  Flex
+  Flex,
+  useBreakpoint,
 } from "@chakra-ui/react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import React, { useState } from "react";
 import { Node } from "../../../@types/globals";
-
-export interface SearchProps {
-  classNames: string;
-}
 
 const getSearchResults = (query: string, language: string) => {
   const { index } = window.__FLEXSEARCH__?.[language] ?? {};
@@ -59,13 +56,14 @@ const ResultList: React.FC<ResultListProps> = ({ results, onClose }) => {
   if (results.length === 0) return <span />;
 
   return (
-    <>
+    <ul>
       {results.map((result) => (
         <Link
           key={`search-${result.name}`}
           aria-label={`search-result-${result.transName}`}
           to={`/pokemon/${result.name}`}
           onClick={onClose}
+          className="search-result-item"
         >
           <Text
             fontSize="xl"
@@ -76,30 +74,44 @@ const ResultList: React.FC<ResultListProps> = ({ results, onClose }) => {
           </Text>
         </Link>
       ))}
-    </>
+    </ul>
   );
 };
 
-const Search: React.FC<SearchProps> = () => {
+const Search: React.FC = () => {
   const { language, t } = useI18next();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Node[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = React.useState("md");
-  const isMobile = useBreakpointValue({
-    base: true,
-    lg: false,
-    ssr: true
-  });
+  useBreakpoint({ ssr: false });
+  const test =
+    useBreakpointValue(
+      {
+        base: 1,
+        md: 2,
+        lg: 3,
+        ssr: 1,
+      },
+      { ssr: false }
+    ) ?? 1;
 
-  const handleSizeClick = (newSize: ModalSizes) => {
+  const placeholder = t("search-pokemons");
+
+  const openModal = (newSize: ModalSizes) => {
     setSize(newSize);
     onOpen();
   };
 
+  const closeModal = () => {
+    setQuery("");
+    setResults([]);
+    onClose();
+  };
+
   const enum ModalSizes {
     MOBILE = "full",
-    DESKTOP = "xl"
+    TABLET_DESKTOP = "xl",
   }
 
   const search = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -115,9 +127,13 @@ const Search: React.FC<SearchProps> = () => {
 
   return (
     <>
-      {isMobile ? (
+      {test < 3 ? (
         <IconButton
-          onClick={() => handleSizeClick(ModalSizes.MOBILE)}
+          onClick={
+            test === 1
+              ? () => openModal(ModalSizes.MOBILE)
+              : () => openModal(ModalSizes.TABLET_DESKTOP)
+          }
           m={4}
           id="search-button"
           aria-label="Search"
@@ -126,9 +142,9 @@ const Search: React.FC<SearchProps> = () => {
       ) : (
         <Flex w="100%" justifyContent="center">
           <Button
-            onClick={() => handleSizeClick(ModalSizes.DESKTOP)}
+            onClick={() => openModal(ModalSizes.TABLET_DESKTOP)}
             leftIcon={<SearchIcon />}
-            color="gray.400"
+            color="gray.700"
             fontWeight="thin"
             bgColor="whiteAlpha.400"
             border="1px"
@@ -137,13 +153,14 @@ const Search: React.FC<SearchProps> = () => {
             my={10}
             mx="auto"
             boxShadow="inner"
+            id="search-button"
           >
-            {t("Search")} Pokémons
+            {t("search-pokemons")}
           </Button>
         </Flex>
       )}
 
-      <Modal onClose={onClose} size={size} isOpen={isOpen}>
+      <Modal onClose={() => closeModal()} size={size} isOpen={isOpen}>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(20px)" />
         <ModalContent bgColor="white.default">
           <ModalHeader>
@@ -152,9 +169,9 @@ const Search: React.FC<SearchProps> = () => {
                 className="search__input"
                 type="text"
                 onChange={search}
-                placeholder="Search"
+                placeholder={placeholder}
               />
-              <InputRightElement onClick={onClose}>
+              <InputRightElement onClick={() => closeModal()}>
                 <CloseIcon />
               </InputRightElement>
             </InputGroup>
@@ -164,13 +181,11 @@ const Search: React.FC<SearchProps> = () => {
           </ModalBody>
           <ModalFooter>
             {query.length > 0 && results.length === 1 && (
-              // TODO: add translations
-              <Text>{`1 ${t("result for")} ${query}`}</Text>
+              <Text>{`1 ${t("result-for")} "${query}"`}</Text>
             )}
 
             {query.length > 0 && results.length !== 1 && (
-              // TODO: add translations
-              <Text>{`${results.length} ${t("results for")} ${query}`}</Text>
+              <Text>{`${results.length} ${t("results-for")} "${query}"`}</Text>
             )}
           </ModalFooter>
         </ModalContent>

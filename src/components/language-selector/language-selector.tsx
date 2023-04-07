@@ -9,15 +9,11 @@ export interface LanguageSelectorProps {
 
 const LanguageSelector = () => {
   const { languages, changeLanguage, language } = useI18next();
+
   return (
     <Menu id="language-selector" aria-label="languages">
-      <MenuButton
-        as={Button}
-        // maxW="50px"
-        // bgColor="blue"
-        rightIcon={<ChevronDownIcon />}
-      >
-        {language.toUpperCase() }
+      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+        {language.toUpperCase()}
       </MenuButton>
       <MenuList maxW="100px">
         {languages.map((lng) => (
@@ -25,6 +21,7 @@ const LanguageSelector = () => {
             id={lng}
             key={lng}
             value={lng}
+            className="select-language"
             onClick={() => {
               changeLanguage(lng);
             }}

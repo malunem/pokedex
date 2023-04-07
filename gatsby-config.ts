@@ -2,8 +2,10 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `pokedex`,
-    siteUrl: `https://www.yourdomain.tld`, // TODO: update url
+    title: `Pokédex`,
+    description: `Browse Pokémons and discover their peculiarities`,
+    siteUrl: `https://pokedex71596.gatsbyjs.io`,
+    image: `/src/images/pokeball.png`,
   },
   graphqlTypegen: true,
   plugins: [
@@ -23,7 +25,7 @@ const config: GatsbyConfig = {
         localeJsonSourceName: `locale`,
         languages: ["en", `it`, `fr`],
         defaultLanguage: `en`,
-        siteUrl: `https://example.com`, // TODO: update url
+        siteUrl: "https://pokedex71596.gatsbyjs.io",
         trailingSlash: "always",
         generateDefaultLanguagePage: true,
         i18nextOptions: {
@@ -89,7 +91,7 @@ const config: GatsbyConfig = {
       },
     },
     {
-      resolve: '@chakra-ui/gatsby-plugin',
+      resolve: "@chakra-ui/gatsby-plugin",
       options: {
         resetCSS: true,
         isUsingColorMode: true,

@@ -1,11 +1,4 @@
-import {
-  Card,
-  CardBody,
-  Heading,
-  Spacer,
-  Stack,
-  Text
-} from "@chakra-ui/react";
+import { Card, CardBody, Heading, Spacer, Stack, Text } from "@chakra-ui/react";
 import { navigate } from "gatsby";
 import { GatsbyImage } from "gatsby-plugin-image";
 import React from "react";
@@ -23,6 +16,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
 
   return (
     <Card
+      className="pokemon-basic"
       id={name}
       direction={{ base: "row", lg: "column" }}
       h={{ base: "150px", lg: "350px" }}

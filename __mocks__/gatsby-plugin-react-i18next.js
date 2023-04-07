@@ -4,10 +4,12 @@ const gatsbyPluginReactI18next = jest.requireActual(
   "gatsby-plugin-react-i18next"
 );
 
-export const useI18next = () => {
+const mockUseI18next = () => {
   return {
     languages: ["en", "it", "fr"],
     originalPath: "/",
+    language: "en",
+    t: jest.fn().mockImplementation((key) => key),
   };
 };
 
@@ -31,6 +33,6 @@ const mockLink = ({
 
 module.exports = {
   ...gatsbyPluginReactI18next,
-  useI18next,
+  useI18next: jest.fn().mockImplementation(mockUseI18next),
   Link: jest.fn().mockImplementation(mockLink),
 };

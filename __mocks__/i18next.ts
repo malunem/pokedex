@@ -1,19 +1,15 @@
-import i18n from "i18next";
+import mockI18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-i18n.use(initReactI18next).init(
+mockI18n.use(initReactI18next).init(
   {
-    // supportedLngs: ["en", "fr"],
     fallbackLng: "en",
-    // debug: true,
     resources: {
-      en: { hello: "hello" },
-      fr: { hello: "salut" },
+      en: { },
+      fr: { },
     },
   },
-  () => {
-    return "hi";
-  }
+  () => "mock test"
 );
 
-export default i18n;
+export default mockI18n;

@@ -4,7 +4,7 @@ import {
   IconButton,
   Spacer,
   Text,
-  useBreakpointValue
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { Link } from "gatsby-plugin-react-i18next";
 import React from "react";
@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isMobile = useBreakpointValue({
     base: true,
     lg: false,
-    ssr: true
+    ssr: true,
   });
 
   return (
@@ -53,11 +53,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           Pokédex
         </Text>
         <Spacer />
-        {isMobile && <Search classNames="search-mobile" />}
+        {isMobile && <Search />}
         <LanguageSelector />
       </Flex>
       <Box as="main" px="5" pb="10">
-        {!isMobile && <Search classNames="search-desktop" />}
+        {!isMobile && <Search />}
         {children}
       </Box>
     </>

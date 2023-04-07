@@ -1,3 +1,10 @@
 {
-  "Hello": "Ciao"
+  "search-pokemons": "Cerca Pokémon",
+  "result-for": "risultato per",
+  "results-for": "risultati per",
+  "sorry-something-went-wrong": "Scusa! Qualcosa è andato storto.",
+  "page-not-found": "Pagina non trovata",
+  "not-found": "Non trovato",
+  "home-page": "Homepage",
+  "pokemon-details": "Dettagli Pokémon"
 }

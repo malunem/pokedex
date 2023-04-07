@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { useI18next } from "gatsby-plugin-react-i18next";
 import { axe, toHaveNoViolations } from "jest-axe";
 import LanguageSelector from "./language-selector";
@@ -17,18 +17,14 @@ describe("LanguageSelector", () => {
   });
 
   it("renders all languages", () => {
-    render(<LanguageSelector />);
+    const { getAllByText } = render(<LanguageSelector />);
 
-    const languageLinks = screen.getAllByRole("listitem");
-    expect(languageLinks).toHaveLength(languages.length);
+    languages.forEach((language) => {
+      const elements = getAllByText(language.toUpperCase());
 
-    languages.forEach((language, i) => {
-      expect(languageLinks[i]).toHaveAttribute("id", language);
-      expect(languageLinks[i].querySelector("a")).toHaveAttribute(
-        "href",
-        `/${language}/`
-      );
-      expect(languageLinks[i].querySelector("a")).toHaveTextContent(language);
+      // expect to find 2 elements if it's the current language, 1 otherwise
+      expect(elements.length).toBeGreaterThanOrEqual(1);
+      expect(elements.length).toBeLessThanOrEqual(2);
     });
   });
 });

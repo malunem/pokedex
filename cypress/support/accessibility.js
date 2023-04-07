@@ -1,4 +1,6 @@
 export function terminalLog(violations) {
+  violations.map((violation) => cy.task("log", violation));
+
   cy.task(
     "log",
     `${violations.length} accessibility violation${

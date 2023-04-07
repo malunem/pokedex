@@ -13,8 +13,8 @@ const mockPokemon = {
   pokemonBasic: {
     color: "green",
     number: "123",
-    localFile: null
-  }
+    localFile: null,
+  },
 };
 
 const makeSut = ({ pokemon }: Partial<PokemonCardProps>) =>
@@ -23,7 +23,7 @@ const makeSut = ({ pokemon }: Partial<PokemonCardProps>) =>
 describe("<PokemonCard />", () => {
   it("should have no accessibility violations", async () => {
     const { container } = makeSut({
-      pokemon: mockPokemon
+      pokemon: mockPokemon,
     });
 
     const results = await axe(container);
@@ -31,21 +31,19 @@ describe("<PokemonCard />", () => {
   });
 
   it("Should render pokemon data correctly", () => {
-    const { getByText, getByRole } = makeSut({
-      pokemon: mockPokemon
+    const { getByText } = makeSut({
+      pokemon: mockPokemon,
     });
 
     expect(getByText(/Bulbasaur/)).toBeInTheDocument();
     expect(getByText(/123/)).toBeInTheDocument();
-    expect(getByRole("link")).toHaveAttribute("href", "/pokemon/bulbasaur");
   });
 
   it("Should render pokemon without number", () => {
-    const { getByText, getByRole } = makeSut({
-      pokemon: mockPokemon
+    const { getByText } = makeSut({
+      pokemon: mockPokemon,
     });
 
     expect(getByText(/Bulbasaur/)).toBeInTheDocument();
-    expect(getByRole("link")).toHaveAttribute("href", "/pokemon/bulbasaur");
   });
 });

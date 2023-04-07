@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const { PokemonClient } = require("pokenode-ts");
 const { createRemoteFileNode } = require("gatsby-source-filesystem");
-const { getPokemonDetails } = require("./utils/pokemon-details.js");
+const {
+  getPokemonDetails,
+  callApiWithRetry,
+} = require("./utils/pokemon-details.js");
 
 const POKEMON_BASIC_NODE_TYPE = "PokemonBasic";
 const POKEMON_DETAILS_NODE_TYPE = "PokemonDetails";
@@ -11,19 +13,17 @@ const SUPPORTED_LANGUAGES = ["en", "it", "fr"];
 exports.sourceNodes = async ({
   actions,
   createContentDigest,
-  createNodeId
+  createNodeId,
 }) => {
   const { createNode } = actions;
-  const pokemonApi = new PokemonClient();
-
-  const pokemonSpecies = await pokemonApi.listPokemonSpecies(0, 200);
+  const pokemonSpecies = await callApiWithRetry("pokemonSpecies");
   const pokemons = await getPokemonDetails(
     pokemonSpecies.results,
     SUPPORTED_LANGUAGES
   );
   const data = {
     pokemonSpecies: pokemonSpecies.results,
-    pokemons
+    pokemons,
   };
 
   SUPPORTED_LANGUAGES.forEach((language) => {
@@ -45,8 +45,8 @@ exports.sourceNodes = async ({
         ).genus,
         internal: {
           type: POKEMON_DETAILS_NODE_TYPE,
-          contentDigest: createContentDigest(pokemonSpeciesItem)
-        }
+          contentDigest: createContentDigest(pokemonSpeciesItem),
+        },
       });
     });
   });
@@ -63,8 +63,8 @@ exports.sourceNodes = async ({
       color,
       internal: {
         type: POKEMON_BASIC_NODE_TYPE,
-        contentDigest: createContentDigest(pokemonSpeciesItem)
-      }
+        contentDigest: createContentDigest(pokemonSpeciesItem),
+      },
     });
   });
 };
@@ -74,7 +74,7 @@ exports.onCreateNode = async ({
   node, // the node that was just created
   actions: { createNode, createNodeField },
   createNodeId,
-  getCache
+  getCache,
 }) => {
   if (node.internal.type === POKEMON_BASIC_NODE_TYPE) {
     // the url of the remote image to generate a node for
@@ -83,7 +83,7 @@ exports.onCreateNode = async ({
       parentNodeId: node.id,
       createNode,
       createNodeId,
-      getCache
+      getCache,
     });
 
     createNodeField({ node, name: "localFile", value: fileNode.id });
@@ -104,10 +104,3 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
   `);
 };
-
-// TODO
-// exports.onPostBuild = async ({ cache }) => {
-//   await cache.set(`key`, `value`);
-//   const cachedValue = await cache.get(`key`);
-//   console.log(cachedValue); // logs `value`
-// };
