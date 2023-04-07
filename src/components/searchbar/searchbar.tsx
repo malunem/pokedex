@@ -15,15 +15,22 @@ import {
   Text,
   useBreakpointValue,
   Flex,
-  useBreakpoint,
 } from "@chakra-ui/react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import React, { useState } from "react";
-import { Node } from "../../../@types/globals";
+import { Index, Node, Store } from "../../../@types/globals";
+
+const isBrowser = typeof window !== "undefined";
 
 const getSearchResults = (query: string, language: string) => {
-  const { index } = window.__FLEXSEARCH__?.[language] ?? {};
-  const { store } = window.__FLEXSEARCH__?.[language] ?? {};
+  let index: Index | undefined;
+  let store: Store | undefined;
+
+  if (isBrowser) {
+    index = window.__FLEXSEARCH__?.[language]?.index;
+    store = window.__FLEXSEARCH__?.[language]?.store;
+  }
+
   if (!index) {
     return [];
   }
@@ -84,17 +91,15 @@ const Search: React.FC = () => {
   const [results, setResults] = useState<Node[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = React.useState("md");
-  useBreakpoint({ ssr: false });
-  const test =
-    useBreakpointValue(
-      {
+
+  const breakpoint = isBrowser
+    ? useBreakpointValue({
         base: 1,
         md: 2,
         lg: 3,
         ssr: 1,
-      },
-      { ssr: false }
-    ) ?? 1;
+      }) ?? 1
+    : 1;
 
   const placeholder = t("search-pokemons");
 
@@ -127,10 +132,10 @@ const Search: React.FC = () => {
 
   return (
     <>
-      {test < 3 ? (
+      {breakpoint < 3 ? (
         <IconButton
           onClick={
-            test === 1
+            breakpoint === 1
               ? () => openModal(ModalSizes.MOBILE)
               : () => openModal(ModalSizes.TABLET_DESKTOP)
           }

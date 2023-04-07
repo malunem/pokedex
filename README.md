@@ -23,6 +23,12 @@ The website is publicly deployed on Gatsby Cloud at this address: https://pokede
 
     At the end, you will be promped to view the website at http://localhost:8000
 
+    After the first run, you can restart it with:
+
+    ```bash
+    docker run -p 8000:8000 pokedex
+    ```
+
 2.  **Run tests**
 
     Navigate into the project root directory and run the command:
@@ -44,6 +50,8 @@ The website is publicly deployed on Gatsby Cloud at this address: https://pokede
     ```bash
     npm run cy:open
     ```
+
+    Please note that Cypress will report some accessibility issues checked with a11y: they are relative to ChakraUI Toast components and there is an [issue](https://github.com/chakra-ui/chakra-ui/issues/7324) open on their repo.
 
 3.  **Build for production**
 
@@ -71,4 +79,4 @@ All Pokémon data is fetched at build time with REST APIs by the custom plugin `
 
 All pages are created at build time. The project contains 200 Pokémons.
 
-If Pokémon REST APIs return errors or there is some network issue, the plugin retries to fetch data recursively with increasing delay, to ensure the website is never built without data. 
+If Pokémon REST APIs return errors or there is some network issue, the plugin retries to fetch data recursively with increasing delay, to ensure the website is never built without data.

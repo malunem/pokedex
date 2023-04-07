@@ -16,12 +16,16 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+const isBrowser = typeof window !== "undefined";
+
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const isMobile = useBreakpointValue({
-    base: true,
-    lg: false,
-    ssr: true,
-  });
+  const isMobile = isBrowser
+    ? useBreakpointValue({
+        base: true,
+        lg: false,
+        ssr: true,
+      })
+    : true;
 
   return (
     <>
