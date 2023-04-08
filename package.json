@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "npm run --silent all-tests",
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -H 0.0.0.0",
     "start": "gatsby develop",
     "build": "npm run pre-build && gatsby build",
     "serve": "gatsby serve",

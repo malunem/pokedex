@@ -5,16 +5,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    entrypoint: gatsby
+    # entrypoint: gatsby
     volumes:
-      - .:/app
+      - .:/pokedex
 
   develop:
     build:
       context: .
       dockerfile: Dockerfile
-    command: gatsby develop -H 0.0.0.0
+    # command: gatsby develop -H 0.0.0.0
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
+      - .:/pokedex
