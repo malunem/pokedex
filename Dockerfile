@@ -1,6 +1,6 @@
 # Use a Node.js base image
 FROM node:18.14.2
-WORKDIR /
+WORKDIR /pokedex
 COPY package*.json .
 # Setup Gatsby environment
 RUN apt update && \
