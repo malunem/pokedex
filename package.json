@@ -8,11 +8,12 @@
     "gatsby"
   ],
   "scripts": {
-    "test": "npm run --silent all-tests",
     "develop": "gatsby develop -H 0.0.0.0",
+    "test": "npm run --silent all-tests",
+    "prod": "npm run --silent pre-build && gatsby build && npm run serve",
     "start": "gatsby develop",
-    "build": "npm run pre-build && gatsby build",
-    "serve": "gatsby serve",
+    "build": "gatsby build",
+    "serve": "gatsby serve -H 0.0.0.0",
     "clean": "gatsby clean",
     "prepare": "husky install",
     "cy:open": "cypress open",

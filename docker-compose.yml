@@ -1,20 +1,19 @@
 version: "3.7"
 
 services:
-  gatsby:
+  dev:
     build:
       context: .
       dockerfile: Dockerfile
-    # entrypoint: gatsby
     volumes:
       - .:/pokedex
-
-  develop:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    # command: gatsby develop -H 0.0.0.0
     ports:
       - "8000:8000"
-    volumes:
-      - .:/pokedex
+
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    command: npm run build
