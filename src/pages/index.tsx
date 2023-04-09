@@ -23,7 +23,7 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
   return (
     <Layout>
       <SEO title={title} />
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 5 }} spacing={3}>
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3, xl: 5}} spacing={{base: 3, '2xl': "1vw"}}>
         {pokemons?.map((pokemon) => (
           <PokemonCard key={pokemon.name} pokemon={pokemon} />
         ))}
@@ -62,7 +62,7 @@ export const query = graphql`
           color
           localFile {
             childImageSharp {
-              gatsbyImageData
+              gatsbyImageData(width: 512)
             }
           }
         }

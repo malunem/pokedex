@@ -58,7 +58,7 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
     You can start a production build by running the following command. This will build the project for production after running the tests, only if they pass, and serve it on http://localhost:9000
 
     ```bash
-    docker compose up build --build
+    docker compose up prod --build
     ```
 
 4.  **Deploy**

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { motion, useAnimationControls } from "framer-motion";
 import { graphql, HeadProps, PageProps } from "gatsby";
-import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
+import { GatsbyImage, getSrc, StaticImage } from "gatsby-plugin-image";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
 import React, { useEffect, useState } from "react";
 import { v1 as uniqueId } from "uuid";
@@ -28,10 +28,7 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
   const pokeballAnimation = useAnimationControls();
   const pokemonAnimation = useAnimationControls();
 
-  useEffect(() => {
-    animationSequence();
-  }, [startAnimation]);
-
+  
   const animationSequence = async () => {
     await pokeballAnimation.start({
       rotate: [0, 10, 0],
@@ -45,12 +42,17 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
     return await pokemonAnimation.start({ opacity: 1, scale: [1, 1.5, 1] });
   };
 
+  useEffect(() => {
+    animationSequence();
+  }, [startAnimation]);
+
   return (
     <Layout>
       <SimpleGrid
         id="pokemon-image-container"
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 2, lg: 10 }}
+        minH="50vh"
       >
         <Flex
           direction="column"
@@ -58,20 +60,26 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
           alignItems="center"
           marginLeft={{ lg: "100px" }}
           id="name-pic-container"
+          minW="30vw"
         >
           <Heading
             as="h1"
             id={name}
             className="pokemon-name"
-            fontSize="6xl"
+            fontSize="5vh"
             textAlign="center"
           >
             {transName}
           </Heading>
           <Flex w="100%" justifyContent="center" alignItems="center">
-            <Box borderRadius="50%" bgColor={`${color}.600`} px={2}>
+            <Box
+              borderRadius="50%"
+              w="fit-content"
+              bgColor={`${color}.600`}
+              px="0.5vw"
+            >
               <Text
-                fontSize="md"
+                fontSize="2vh"
                 fontWeight="semibold"
                 color="white"
                 className="pokemon-number"
@@ -80,48 +88,53 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
               </Text>
             </Box>
           </Flex>
-            {gatsbyImageData && (
-              <Box _hover={{ transform: "scale(1.05)" }} position="relative" id="pokemon-image-container">
-                <Box
-                  as={motion.span}
-                  zIndex={2}
-                  position="absolute"
-                  width="40%"
-                  bottom="30%"
-                  right="30%"
-                  animate={pokeballAnimation}
-                >
-                  <StaticImage
-                    src="../../static/pokeball.png"
-                    alt="pokéball"
-                    objectFit="contain"
-                    onLoad={() => setStartAnimation(true)}
-                  />
-                </Box>
-                <Box
-                  as={motion.div}
-                  animate={pokemonAnimation}
-                  initial={{ opacity: 0, scale: 0 }}
-                >
-                  <GatsbyImage
-                    className="pokemon-sprite"
-                    image={gatsbyImageData}
-                    alt={`${name} sprite`}
-                    objectFit="scale-down"
-                  />
-                </Box>
+          {gatsbyImageData && (
+            <Box
+              _hover={{ transform: "scale(1.05)" }}
+              position="relative"
+              id="pokemon-image-container"
+            >
+              <Box
+                as={motion.span}
+                zIndex={2}
+                position="absolute"
+                width="40%"
+                bottom="30%"
+                right="30%"
+                animate={pokeballAnimation}
+              >
+                <StaticImage
+                  src="../../static/pokeball.png"
+                  alt="pokéball"
+                  objectFit="contain"
+                  onLoad={() => setStartAnimation(true)}
+                />
               </Box>
-            )}
-          </Flex>
+              <Box
+                as={motion.div}
+                animate={pokemonAnimation}
+                initial={{ opacity: 0, scale: 0 }}
+              >
+                <GatsbyImage
+                  className="pokemon-sprite"
+                  image={gatsbyImageData}
+                  alt={`${name} sprite`}
+                  objectFit="scale-down"
+                />
+              </Box>
+            </Box>
+          )}
+        </Flex>
         <Flex
           justifyContent="center"
           alignItems="center"
           h={{ base: "unset", lg: "100%" }}
           marginEnd={{ lg: "100px" }}
           marginTop={{ base: 10, lg: "unset" }}
+          minW="30vw"
         >
           <Stack direction="column">
-            <Badge fontSize="md" className="pokemon-genus" colorScheme="blue">
+            <Badge fontSize="2vh" className="pokemon-genus" colorScheme="blue">
               {transGenus}
             </Badge>
             {transDescriptions?.map((description) => (
@@ -129,7 +142,7 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
                 key={`description-${uniqueId()}`}
                 className="pokemon-description"
                 m={10}
-                fontSize="xl"
+                fontSize="3vh"
               >
                 {description?.flavor_text ?? ""}
               </Text>
@@ -184,7 +197,7 @@ export const query = graphql`
         color
         localFile {
           childImageSharp {
-            gatsbyImageData
+            gatsbyImageData(width: 512)
           }
         }
       }

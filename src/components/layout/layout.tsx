@@ -4,7 +4,7 @@ import {
   IconButton,
   Spacer,
   Text,
-  useBreakpointValue,
+  useBreakpointValue
 } from "@chakra-ui/react";
 import { Link } from "gatsby-plugin-react-i18next";
 import React from "react";
@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     ? useBreakpointValue({
         base: true,
         lg: false,
-        ssr: true,
+        ssr: true
       })
     : true;
 
@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Flex
         as="header"
         w="100%"
-        h="7vh"
+        h={{ base: "7vh", "2xl": "10vh" }}
         px={4}
         mb={4}
         className="main-header"
@@ -45,12 +45,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <IconButton
             id="home"
             aria-label="home-button"
-            icon={<IconPokeball />}
+            h="5vh"
+            w="5vh"
+            icon={<IconPokeball size="80%" />}
           />
         </Link>
         <Spacer />
         <Text
-          fontSize={{ base: "2xl", lg: "4xl" }}
+          fontSize={{ base: "2xl", lg: "5vh" }}
           color="pokemonBlue"
           fontWeight="black"
         >

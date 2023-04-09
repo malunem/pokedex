@@ -14,7 +14,7 @@ import {
   useDisclosure,
   Text,
   useBreakpointValue,
-  Flex,
+  Flex
 } from "@chakra-ui/react";
 import { Link, useI18next } from "gatsby-plugin-react-i18next";
 import React, { useState } from "react";
@@ -73,7 +73,7 @@ const ResultList: React.FC<ResultListProps> = ({ results, onClose }) => {
           className="search-result-item"
         >
           <Text
-            fontSize="xl"
+            fontSize="2vh"
             fontWeight="bold"
             _hover={{ transform: "scale(1.05)" }}
           >
@@ -97,7 +97,8 @@ const Search: React.FC = () => {
         base: 1,
         md: 2,
         lg: 3,
-        ssr: 1,
+        "2xl": 4,
+        ssr: 1
       }) ?? 1
     : 1;
 
@@ -117,6 +118,7 @@ const Search: React.FC = () => {
   const enum ModalSizes {
     MOBILE = "full",
     TABLET_DESKTOP = "xl",
+    EXTRA_LARGE = "3xl"
   }
 
   const search = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -147,18 +149,23 @@ const Search: React.FC = () => {
       ) : (
         <Flex w="100%" justifyContent="center">
           <Button
-            onClick={() => openModal(ModalSizes.TABLET_DESKTOP)}
+            onClick={
+              breakpoint === 3
+                ? () => openModal(ModalSizes.TABLET_DESKTOP)
+                : () => openModal(ModalSizes.EXTRA_LARGE)
+            }
             leftIcon={<SearchIcon />}
             color="gray.700"
             fontWeight="thin"
             bgColor="whiteAlpha.400"
             border="1px"
             h="5vh"
-            w="50%"
+            w="40vw"
             mb={5}
             mx="auto"
             boxShadow="inner"
             id="search-button"
+            fontSize="2vh"
           >
             {t("search-pokemons")}
           </Button>
@@ -167,13 +174,17 @@ const Search: React.FC = () => {
 
       <Modal onClose={() => closeModal()} size={size} isOpen={isOpen}>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(20px)" />
-        <ModalContent bgColor="white.default">
+        <ModalContent bgColor="white.default" w={{base:"100vw", lg: "40vw" }}>
           <ModalHeader>
             <InputGroup>
               <Input
                 className="search__input"
                 type="text"
                 onChange={search}
+                // size={{xl: 'lg'}}
+                h="5vh"
+                // w="40vw"
+                fontSize="2vh"
                 placeholder={placeholder}
               />
               <InputRightElement onClick={() => closeModal()}>
@@ -184,7 +195,7 @@ const Search: React.FC = () => {
           <ModalBody className="search__list">
             <ResultList {...{ query, results, onClose }} />
           </ModalBody>
-          <ModalFooter>
+          <ModalFooter fontSize="1.5vh">
             {query.length > 0 && results.length === 1 && (
               <Text>{`1 ${t("result-for")} "${query}"`}</Text>
             )}

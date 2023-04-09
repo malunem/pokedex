@@ -12,16 +12,17 @@ const LanguageSelector = () => {
 
   return (
     <Menu id="language-selector" aria-label="languages">
-      <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+      <MenuButton as={Button} h="5vh" fontSize={{base: '3vw', '2xl': "1vw"}} rightIcon={<ChevronDownIcon />}>
         {language.toUpperCase()}
       </MenuButton>
-      <MenuList maxW="100px">
+      <MenuList maxH="5vh">
         {languages.map((lng) => (
           <MenuItem
             id={lng}
             key={lng}
             value={lng}
             className="select-language"
+            fontSize={{base: '3vw', '2xl': "1vw"}}
             onClick={() => {
               changeLanguage(lng);
             }}

@@ -19,19 +19,20 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
       className="pokemon-basic"
       id={name}
       direction={{ base: "row", lg: "column" }}
-      h={{ base: "150px", lg: "350px" }}
-      maxW={{ base: "100%", lg: "350px" }}
+      maxH={{ base: "150px", lg: "40vh"}}
+      maxW={{ base: "100%", lg: "20vw" }}
       bgColor={`${color}.200`}
       onClick={() => navigate(`/pokemon/${name}`)}
+      borderRadius={{'2xl': '5%'}}
       boxShadow="md"
       _hover={{ cursor: "pointer", transform: "scale(1.05)" }}
     >
       <Stack>
         <CardBody>
-          <Heading size={{ base: "2xl", lg: "xl" }} fontWeight="semibold">
+          <Heading fontSize={{ base: "2xl", lg: "5vh" }} fontWeight="semibold">
             {transName}
           </Heading>
-          <Text>{number ?? ""}</Text>
+          <Text fontSize="2vh">{number ?? ""}</Text>
         </CardBody>
       </Stack>
 
