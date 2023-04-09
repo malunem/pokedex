@@ -153,9 +153,9 @@ const Search: React.FC = () => {
             fontWeight="thin"
             bgColor="whiteAlpha.400"
             border="1px"
-            h="50px"
-            w="75%"
-            my={10}
+            h="5vh"
+            w="50%"
+            mb={5}
             mx="auto"
             boxShadow="inner"
             id="search-button"

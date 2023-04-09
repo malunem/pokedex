@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://pokedex71596.gatsbyjs.io/">
-    <img alt="Gatsby" src="./static/favicon.ico" width="60" />
+    <img alt="Gatsby" src="./static/pokeball.png" width="100" />
   </a>
 </p>
 <h1 align="center">

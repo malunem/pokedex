@@ -5,12 +5,13 @@ import {
   Heading,
   SimpleGrid,
   Stack,
-  Text,
+  Text
 } from "@chakra-ui/react";
+import { motion, useAnimationControls } from "framer-motion";
 import { graphql, HeadProps, PageProps } from "gatsby";
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { v1 as uniqueId } from "uuid";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
@@ -23,21 +24,46 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
   const { number, localFile, color } = pokemonBasic ?? {};
   const { gatsbyImageData } = localFile?.childImageSharp ?? {};
 
+  const [startAnimation, setStartAnimation] = useState(false);
+  const pokeballAnimation = useAnimationControls();
+  const pokemonAnimation = useAnimationControls();
+
+  useEffect(() => {
+    animationSequence();
+  }, [startAnimation]);
+
+  const animationSequence = async () => {
+    await pokeballAnimation.start({
+      rotate: [0, 10, 0],
+      transition: {
+        delay: 0.2,
+        repeat: 10,
+        duration: 0.2
+      }
+    });
+    await pokeballAnimation.start({ opacity: 0, scale: 0 });
+    return await pokemonAnimation.start({ opacity: 1, scale: [1, 1.5, 1] });
+  };
+
   return (
     <Layout>
-      <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 2, lg: 10 }}>
+      <SimpleGrid
+        id="pokemon-image-container"
+        columns={{ base: 1, lg: 2 }}
+        spacing={{ base: 2, lg: 10 }}
+      >
         <Flex
           direction="column"
           justifyContent="center"
           alignItems="center"
-          h={{ base: "unset", lg: "100%" }}
           marginLeft={{ lg: "100px" }}
+          id="name-pic-container"
         >
           <Heading
             as="h1"
             id={name}
             className="pokemon-name"
-            fontSize="7xl"
+            fontSize="6xl"
             textAlign="center"
           >
             {transName}
@@ -54,16 +80,39 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
               </Text>
             </Box>
           </Flex>
-          {gatsbyImageData && (
-            <Box _hover={{ transform: "scale(1.05)" }}>
-              <GatsbyImage
-                className="pokemon-sprite"
-                image={gatsbyImageData}
-                alt={`${name} sprite`}
-              />
-            </Box>
-          )}
-        </Flex>
+            {gatsbyImageData && (
+              <Box _hover={{ transform: "scale(1.05)" }} position="relative" id="pokemon-image-container">
+                <Box
+                  as={motion.span}
+                  zIndex={2}
+                  position="absolute"
+                  width="40%"
+                  bottom="30%"
+                  right="30%"
+                  animate={pokeballAnimation}
+                >
+                  <StaticImage
+                    src="../../static/pokeball.png"
+                    alt="pokéball"
+                    objectFit="contain"
+                    onLoad={() => setStartAnimation(true)}
+                  />
+                </Box>
+                <Box
+                  as={motion.div}
+                  animate={pokemonAnimation}
+                  initial={{ opacity: 0, scale: 0 }}
+                >
+                  <GatsbyImage
+                    className="pokemon-sprite"
+                    image={gatsbyImageData}
+                    alt={`${name} sprite`}
+                    objectFit="scale-down"
+                  />
+                </Box>
+              </Box>
+            )}
+          </Flex>
         <Flex
           justifyContent="center"
           alignItems="center"
@@ -97,7 +146,7 @@ type DataProps = Queries.PokemonPageQuery;
 
 export const Head = ({
   data,
-  pageContext,
+  pageContext
 }: HeadProps<DataProps, PageContext>): JSX.Element => {
   const { transName } = data.pokemon ?? {};
   return (

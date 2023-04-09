@@ -32,9 +32,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Flex
         as="header"
         w="100%"
-        h="75px"
+        h="7vh"
         px={4}
-        mb={10}
+        mb={4}
         className="main-header"
         justifyContent="center"
         alignItems="center"
@@ -50,7 +50,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </Link>
         <Spacer />
         <Text
-          fontSize={{ base: "2xl", lg: "5xl" }}
+          fontSize={{ base: "2xl", lg: "4xl" }}
           color="pokemonBlue"
           fontWeight="black"
         >
@@ -60,7 +60,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {isMobile && <Search />}
         <LanguageSelector />
       </Flex>
-      <Box as="main" px="5" pb="10">
+      <Box as="main" px="5" pb="5" minHeight="90vh">
         {!isMobile && <Search />}
         {children}
       </Box>
