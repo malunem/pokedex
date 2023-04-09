@@ -27,9 +27,7 @@ const NotFoundPage: React.FC<PageProps> = () => {
 
 export default NotFoundPage;
 
-export const Head: HeadFC = () => {
-  return <title>Pokédex: 404</title>;
-};
+export const Head: HeadFC = () => <title>Pokédex: 404</title>;
 
 export const query = graphql`
   query ErrorPage($language: String!) {
