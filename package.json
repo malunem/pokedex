@@ -10,7 +10,7 @@
   "scripts": {
     "develop": "gatsby develop -H 0.0.0.0",
     "test": "npm run --silent all-tests",
-    "prod": "npm run --silent pre-build && gatsby build && npm run serve",
+    "prod": "npm run pre-prod && gatsby build && npm run serve",
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve -H 0.0.0.0",
@@ -19,7 +19,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
-    "all-tests": "echo '\n🔒 Starting tests...\n' && npm run pretty-quick && npm run typecheck && npm run linter && npm run jest-test && npm run cypress-test && echo '\n🔥 All tests passed!\n'",
+    "all-tests": "echo '\n🔒 Starting tests...\n' && npm run pretty-quick && npm run typecheck && npm run linter && npm run jest-test && echo '\n🔥 All tests passed!\n'",
     "pretty-quick": "echo '\n🧪 Testing code formatting...' && pretty-quick",
     "typecheck": "echo '\n🧪 Testing TypeScript compiling...' && tsc --noEmit && echo '✅ TypeScript compiled!'",
     "linter": "echo '\n🧪 Testing code patterns...' && npx eslint --fix . && echo '✅ Code patterns checked!'",

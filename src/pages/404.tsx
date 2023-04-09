@@ -28,8 +28,7 @@ const NotFoundPage: React.FC<PageProps> = () => {
 export default NotFoundPage;
 
 export const Head: HeadFC = () => {
-  const { t } = useI18next();
-  return <title>{t("not-found")}</title>;
+  return <title>Pokédex: 404</title>;
 };
 
 export const query = graphql`
