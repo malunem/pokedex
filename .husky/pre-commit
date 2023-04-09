@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run pre-commit --silent
+echo '🐋 Starting test docker service' && docker compose up test --build && echo '🐋 Test docker service completed successfully!'

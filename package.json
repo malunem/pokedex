@@ -7,6 +7,10 @@
   "keywords": [
     "gatsby"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/malunem/pokedex"
+  },
   "scripts": {
     "develop": "gatsby develop -H 0.0.0.0",
     "test": "npm run --silent all-tests",

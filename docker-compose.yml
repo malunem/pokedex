@@ -2,22 +2,29 @@ version: "3.7"
 
 services:
   dev:
+    container_name: pokedex-dev
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev
     volumes:
       - .:/pokedex
     ports:
       - "8000:8000"
 
   prod:
+    container_name: pokedex-prod
     build:
       context: .
       dockerfile: Dockerfile
-    command: npm run prod
+      target: prod
+    ports:
+      - "9000:9000"
+
 
   test:
+    container_name: pokedex-test
     build:
       context: .
       dockerfile: Dockerfile
-    entrypoint: npm run test
+      target: test
