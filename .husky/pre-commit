@@ -1,4 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo '🐋 Starting test docker service' && docker compose up test-base --build && echo '🐋 Test docker service completed successfully!' || echo '💻 Docker not available. Starting tests with npm...' && npm run pre-commit --silent && echo '💻 All tests completed successfully!'
+if docker ps
+then
+  echo '🐋 Starting test docker service' && docker compose up test-base --build && echo '🐋 Test docker service completed successfully!'
+else 
+  echo '💻 Docker not available. Starting tests with npm...' && npm run pre-commit --silent && echo '💻 All tests completed successfully!'
+fi

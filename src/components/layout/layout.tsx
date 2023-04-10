@@ -2,9 +2,10 @@ import {
   Box,
   Flex,
   IconButton,
-  Spacer,
+  Switch,
   Text,
-  useBreakpointValue
+  useBreakpointValue,
+  useColorMode,
 } from "@chakra-ui/react";
 import { Link } from "gatsby-plugin-react-i18next";
 import React from "react";
@@ -19,11 +20,13 @@ interface LayoutProps {
 const isBrowser = typeof window !== "undefined";
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const { toggleColorMode } = useColorMode();
+
   const isMobile = isBrowser
     ? useBreakpointValue({
         base: true,
         lg: false,
-        ssr: true
+        ssr: true,
       })
     : true;
 
@@ -50,15 +53,22 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             icon={<IconPokeball size="80%" />}
           />
         </Link>
-        <Spacer />
+        <Switch
+          onChange={toggleColorMode}
+          size={{ base: "md", md: "lg" }}
+          colorScheme="whiteAlpha"
+          mx={2}
+          aria-label="switch-color-mode"
+        />
         <Text
+          as="h1"
           fontSize={{ base: "2xl", lg: "5vh" }}
           color="pokemonBlue"
           fontWeight="black"
+          mx="auto"
         >
           Pokédex
         </Text>
-        <Spacer />
         {isMobile && <Search />}
         <LanguageSelector />
       </Flex>

@@ -174,7 +174,7 @@ const Search: React.FC = () => {
 
       <Modal onClose={() => closeModal()} size={size} isOpen={isOpen}>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(20px)" />
-        <ModalContent bgColor="white.default" w={{base:"100vw", lg: "40vw" }}>
+        <ModalContent w={{base:"100vw", lg: "40vw" }}>
           <ModalHeader>
             <InputGroup>
               <Input

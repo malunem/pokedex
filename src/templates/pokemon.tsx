@@ -15,6 +15,7 @@ import React, { useEffect } from "react";
 import { v1 as uniqueId } from "uuid";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
+import getColorName from "../utils/get-color";
 
 type PokemonPageProps = PageProps<Queries.PokemonPageQuery>;
 
@@ -23,6 +24,7 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
     data.pokemon ?? {};
   const { number, localFile, color } = pokemonBasic ?? {};
   const { gatsbyImageData } = localFile?.childImageSharp ?? {};
+  const colorName = getColorName(color);
 
   const pokeballAnimation = useAnimationControls();
   const pokemonAnimation = useAnimationControls();
@@ -36,10 +38,10 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
         duration: 0.2
       }
     });
-    await pokeballAnimation.mount()
+    await pokeballAnimation.mount();
     await pokeballAnimation.start({ opacity: 0, scale: 0 });
-    await pokemonAnimation.mount()
-    return await pokemonAnimation.start({ opacity: 1, scale: [1, 1.5, 1] });
+    await pokemonAnimation.mount();
+    return pokemonAnimation.start({ opacity: 1, scale: [1, 1.5, 1] });
   };
 
   useEffect(() => {
@@ -63,7 +65,7 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
           minW="30vw"
         >
           <Heading
-            as="h1"
+            as="h2"
             id={name}
             className="pokemon-name"
             fontSize="5vh"
@@ -75,7 +77,7 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
             <Box
               borderRadius="50%"
               w="fit-content"
-              bgColor={`${color}.600`}
+              bgColor={`${colorName}.600`}
               px="0.5vw"
             >
               <Text

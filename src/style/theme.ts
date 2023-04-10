@@ -2,16 +2,16 @@ import { extendTheme } from "@chakra-ui/react";
 
 const customTheme = extendTheme({
   colors: {
-    brown: {
+    customBrown: {
       200: "#ABAFB0",
       600: "#61481C",
     },
-    white: {
+    customWhite: {
       default: "#FFFFFF",
       200: "#FCF8E8",
       600: "#9D9D9D",
     },
-    black: {
+    customBlack: {
       default: "#000000",
       200: "#7F8487",
       600: "#454545",

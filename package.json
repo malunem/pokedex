@@ -21,7 +21,7 @@
     "clean": "gatsby clean",
     "prepare": "husky install",
     "cy:open": "cypress open",
-    "cy:run": "cypress run",
+    "cy:run": "start-server-and-test develop http://localhost:8000 'cypress run'",
     "test:e2e": "start-server-and-test develop http://localhost:8000 cy:open",
     "all-tests": "echo '\n🔒 Starting tests...\n' && npm run pretty-quick && npm run typecheck && npm run linter && npm run jest-test && echo '\n🔥 All tests passed!\n'",
     "pretty-quick": "echo '\n🧪 Testing code formatting...' && pretty-quick",
