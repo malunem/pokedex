@@ -39,7 +39,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
       color={accessibleTextColor}
       bgColor={`${colorName}.200`}
       onClick={() => navigate(`/pokemon/${name}`)}
-      borderRadius={{ "2xl": "5%" }}
+      borderRadius="10px"
       boxShadow="md"
       _hover={{ cursor: "pointer", transform: "scale(1.05)" }}
     >

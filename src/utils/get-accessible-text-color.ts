@@ -7,6 +7,8 @@ const getAccessibleTextColor = (backgroundColor: string | null | undefined, colo
       return darkTextColor  
     case (backgroundColor === 'gray' && colorMode === 'dark'):
       return darkTextColor  
+    case (backgroundColor === 'yellow' && colorMode === 'dark'):
+      return darkTextColor  
     case (backgroundColor === 'customBlack' && colorMode === 'light'):
       return lightTextColor
     default:
