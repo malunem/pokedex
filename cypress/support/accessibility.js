@@ -1,5 +1,11 @@
 export function terminalLog(violations) {
-  violations.map((violation) => cy.task("log", violation));
+  violations.map(({ impact, html, failureSummary }, i) =>
+    cy.task("log", {
+      impact,
+      html,
+      failureSummary
+    })
+  );
 
   cy.task(
     "log",
@@ -12,7 +18,7 @@ export function terminalLog(violations) {
       id,
       impact,
       description,
-      nodes: nodes.length,
+      nodes: nodes.length
     })
   );
   cy.task("table", violationData);

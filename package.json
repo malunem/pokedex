@@ -28,7 +28,6 @@
     "typecheck": "echo '\n🧪 Testing TypeScript compiling...' && tsc --noEmit && echo '✅ TypeScript compiled!'",
     "linter": "echo '\n🧪 Testing code patterns...' && npx eslint --fix . && echo '✅ Code patterns checked!'",
     "jest-test": "echo '\n🧪 Running unit tests...' && jest --coverage ",
-    "cypress-test": "echo '\n🧪 Running end-to-end tests...' && start-server-and-test develop http://localhost:8000 cy:run",
     "pre-commit": "npm run pretty-quick && npm run typecheck && npm run linter",
     "pre-build": "npm run pretty-quick && npm run typecheck && npm run linter && npm run jest-test"
   },

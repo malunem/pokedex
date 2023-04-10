@@ -31,10 +31,11 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
 
 2.  **Run tests**
 
+    
     Navigate into the project root directory and run the command:
 
     ```shell
-    docker compose up test --build
+    docker compose up test --build --attach-dependencies
     ```
 
     This will execute:
@@ -43,19 +44,14 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
     - tsc (strict mode) - to verify that typescript compiles correctly
     - eslint (with AirBnb configs and some custom rules) - to ensure best practices and code quality
     - jest (with coverage report) - for unit tests on components
+    - cypress (running headlessly) - for end to end tests on pages
+      - gatsby develop will be runned as a dependency for cypress
 
-    End to end tests are implemented with Cypress which provides a custom Docker image.
-    
-    Run it headlessly with the command:
-    
-    ```bash
-    docker compose up cypress
-    ```
+    End to end tests could also be run with Cypress in browser:
+    (this will also run the other tests)
 
-    Run it in browser with the command:
-    
     ```bash
-    docker-compose -f docker-compose.yml -f cy-open.yml up cypress
+    docker compose -f docker-compose.yml -f cy-open.yml up test --build --attach-dependencies
     ```
 
     Please note that Cypress will report some accessibility issues checked with a11y: they are relative to ChakraUI Toast components and there is an [issue](https://github.com/chakra-ui/chakra-ui/issues/7324) open on their repo.
@@ -71,6 +67,21 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
 4.  **Deploy**
 
     The project is automatically deployed when the `main` branch is updated.
+
+5.  **npm scripts**
+  
+  All the previous operations can be executed with `npm` outside Docker. Just be sure to use the right version of `npm`, by installing it globally or locally with `Volta` or `nvm`. 
+  The npm version is pinned in package.json under `volta`.
+  
+  Here are the main scripts you can use after you have installed all dependencies with `npm ci`:
+    - `npm run dev`: run gatsby develop on http://localhost:8000
+    - `npm run prod`: run gatsby build on http://localhost:9000
+    - `npm run build`: run gatsby build headlessly
+    - `npm run test`: run base tests (prettier, compiler, linter, unit tests)
+    - `npm run cy:run`: run cypress headlessly
+    - `npm run cy:open`: run cypress in browser
+  
+  There are other npm scripts used internally, such as `npm run pre-commit` which is used as pre-commit git hook by Husky if Docker is not available.
 
 ## 📘 About
 
