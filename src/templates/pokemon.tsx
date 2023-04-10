@@ -9,9 +9,9 @@ import {
 } from "@chakra-ui/react";
 import { motion, useAnimationControls } from "framer-motion";
 import { graphql, HeadProps, PageProps } from "gatsby";
-import { GatsbyImage, getSrc, StaticImage } from "gatsby-plugin-image";
+import { GatsbyImage, StaticImage } from "gatsby-plugin-image";
 import { PageContext } from "gatsby-plugin-react-i18next/dist/types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { v1 as uniqueId } from "uuid";
 import Layout from "../components/layout/layout";
 import SEO from "../components/seo";
@@ -24,11 +24,9 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
   const { number, localFile, color } = pokemonBasic ?? {};
   const { gatsbyImageData } = localFile?.childImageSharp ?? {};
 
-  const [startAnimation, setStartAnimation] = useState(false);
   const pokeballAnimation = useAnimationControls();
   const pokemonAnimation = useAnimationControls();
 
-  
   const animationSequence = async () => {
     await pokeballAnimation.start({
       rotate: [0, 10, 0],
@@ -38,13 +36,15 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
         duration: 0.2
       }
     });
+    await pokeballAnimation.mount()
     await pokeballAnimation.start({ opacity: 0, scale: 0 });
+    await pokemonAnimation.mount()
     return await pokemonAnimation.start({ opacity: 1, scale: [1, 1.5, 1] });
   };
 
   useEffect(() => {
     animationSequence();
-  }, [startAnimation]);
+  }, []);
 
   return (
     <Layout>
@@ -107,13 +107,12 @@ const PokemonPage: React.FC<PokemonPageProps> = ({ data }) => {
                   src="../../static/pokeball.png"
                   alt="pokéball"
                   objectFit="contain"
-                  onLoad={() => setStartAnimation(true)}
                 />
               </Box>
               <Box
                 as={motion.div}
                 animate={pokemonAnimation}
-                initial={{ opacity: 0, scale: 0 }}
+                initial={{ opacity: 0 }}
               >
                 <GatsbyImage
                   className="pokemon-sprite"
