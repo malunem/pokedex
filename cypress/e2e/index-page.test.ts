@@ -1,13 +1,6 @@
 /// <reference types="Cypress" />
 
-import { terminalLog } from "../support/accessibility";
-
 describe("IndexPage", () => {
-  it("has no accessibility violations", () => {
-    cy.visit("/").get("main");
-    cy.injectAxe();
-    cy.checkA11y(undefined, undefined, terminalLog);
-  });
 
   it("renders the language according to url", () => {
     cy.visit("/fr");

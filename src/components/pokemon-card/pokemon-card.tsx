@@ -20,7 +20,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ pokemon }) => {
       id={name}
       direction={{ base: "row", lg: "column" }}
       maxH={{ base: "150px", lg: "40vh"}}
-      maxW={{ base: "100%", lg: "20vw" }}
+      maxW={{ base: "100vw", lg: "33vw", xl: "20vw" }}
       bgColor={`${color}.200`}
       onClick={() => navigate(`/pokemon/${name}`)}
       borderRadius={{'2xl': '5%'}}

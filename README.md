@@ -43,12 +43,19 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
     - tsc (strict mode) - to verify that typescript compiles correctly
     - eslint (with AirBnb configs and some custom rules) - to ensure best practices and code quality
     - jest (with coverage report) - for unit tests on components
-    - cypress (running headlessly) - for end to end tests on pages
 
-    End to end tests could also be run with Cypress opened:
-
+    End to end tests are implemented with Cypress which provides a custom Docker image.
+    
+    Run it headlessly with the command:
+    
     ```bash
-    npm run cy:open
+    docker compose up cypress
+    ```
+
+    Run it in browser with the command:
+    
+    ```bash
+    docker-compose -f docker-compose.yml -f cy-open.yml up cypress
     ```
 
     Please note that Cypress will report some accessibility issues checked with a11y: they are relative to ChakraUI Toast components and there is an [issue](https://github.com/chakra-ui/chakra-ui/issues/7324) open on their repo.

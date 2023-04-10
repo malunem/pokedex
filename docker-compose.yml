@@ -11,6 +11,12 @@ services:
       - .:/pokedex
     ports:
       - "8000:8000"
+    healthcheck:
+      test: curl -f http://localhost:8000 || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 10
+      start_period: 1m
 
   prod:
     container_name: pokedex-prod
@@ -21,10 +27,24 @@ services:
     ports:
       - "9000:9000"
 
-
   test:
     container_name: pokedex-test
     build:
       context: .
       dockerfile: Dockerfile
       target: test
+
+  cypress:
+    # the Docker image to use from https://github.com/cypress-io/cypress-docker-images
+    image: "cypress/included:12.3.0"
+    container_name: pokedex-cypress
+    depends_on:
+      dev:
+        condition: service_healthy
+    environment:
+      # pass base url to test pointing at the web application
+      - CYPRESS_baseUrl=http://dev:8000
+    # share the current folder as volume to avoid copying
+    working_dir: /e2e
+    volumes:
+      - ./:/e2e

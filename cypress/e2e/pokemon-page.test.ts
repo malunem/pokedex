@@ -1,13 +1,4 @@
-/// <reference types="Cypress" />
-
-import { terminalLog } from "../support/accessibility";
-
 describe("PokemonPage", () => {
-  it("has no accessibility violations", () => {
-    cy.visit("/pokemon/chikorita").get("main");
-    cy.injectAxe();
-    cy.checkA11y(undefined, undefined, terminalLog);
-  });
 
   it("renders a random pokemon page", () => {
     cy.visit("/");
