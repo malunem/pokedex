@@ -74,12 +74,13 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
   The npm version is pinned in package.json under `volta`.
   
   Here are the main scripts you can use after you have installed all dependencies with `npm ci`:
-    - `npm run dev`: run gatsby develop on http://localhost:8000
-    - `npm run prod`: run gatsby build on http://localhost:9000
-    - `npm run build`: run gatsby build headlessly
-    - `npm run test`: run base tests (prettier, compiler, linter, unit tests)
-    - `npm run cy:run`: run cypress headlessly
-    - `npm run cy:open`: run cypress in browser
+  
+  - `npm run dev`: run gatsby develop on http://localhost:8000    
+  - `npm run prod`: run gatsby build on http://localhost:9000
+  - `npm run build`: run gatsby build headlessly
+  - `npm run test`: run base tests (prettier, compiler, linter, unit tests)
+  - `npm run cy:run`: run cypress headlessly
+  - `npm run cy:open`: run cypress in browser
   
   There are other npm scripts used internally, such as `npm run pre-commit` which is used as pre-commit git hook by Husky if Docker is not available.
 

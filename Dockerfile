@@ -13,9 +13,9 @@ RUN curl -v -f https://get.volta.sh | bash
 
 # Install dependencies
 COPY package*.json .
+COPY yarn.lock .
 RUN volta install node
-RUN volta run npm install -g gatsby-cli
-RUN volta run npm ci 
+RUN yarn global add gatsby-cli
 
 # Copy source code
 COPY . .
@@ -23,10 +23,10 @@ COPY . .
 EXPOSE 8000
 
 FROM base as dev
-CMD volta run npm run develop
+CMD yarn install && yarn run develop
 
 FROM base as prod
-CMD volta run npm run prod
+CMD yarn install && yarn run prod
 
 FROM base as test
-CMD volta run npm run test
+CMD yarn install && yarn run test

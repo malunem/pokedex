@@ -5,7 +5,7 @@ const config: GatsbyConfig = {
     title: `Pokédex`,
     description: `Browse Pokémons and discover their peculiarities`,
     siteUrl: `https://pokedex71596.gatsbyjs.io`,
-    image: `/src/images/pokeball.png`,
+    image: `/pokeball.png`,
   },
   graphqlTypegen: true,
   plugins: [

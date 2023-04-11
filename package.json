@@ -26,7 +26,7 @@
     "all-tests": "echo '\n🔒 Starting tests...\n' && npm run pretty-quick && npm run typecheck && npm run linter && npm run jest-test && echo '\n🔥 All tests passed!\n'",
     "pretty-quick": "echo '\n🧪 Testing code formatting...' && pretty-quick",
     "typecheck": "echo '\n🧪 Testing TypeScript compiling...' && tsc --noEmit && echo '✅ TypeScript compiled!'",
-    "linter": "echo '\n🧪 Testing code patterns...' && npx eslint --fix . && echo '✅ Code patterns checked!'",
+    "linter": "echo '\n🧪 Testing code patterns...' && yarn eslint --fix . && echo '✅ Code patterns checked!'",
     "jest-test": "echo '\n🧪 Running unit tests...' && jest --coverage ",
     "pre-commit": "npm run pretty-quick && npm run typecheck && npm run linter",
     "pre-build": "npm run pretty-quick && npm run typecheck && npm run linter && npm run jest-test"
@@ -35,6 +35,7 @@
     "@chakra-ui/gatsby-plugin": "^3.1.1",
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.5",
+    "@chakra-ui/system": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@react-icons/all-files": "^4.1.0",
@@ -74,6 +75,7 @@
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
+    "@types/testing-library__jest-dom": "^5.14.5",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
@@ -87,6 +89,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-ternary": "^2.0.0",
     "eslint-plugin-typescript-sort-keys": "^2.3.0",
@@ -102,6 +105,8 @@
     "typescript": "^5.0.0"
   },
   "volta": {
-    "node": "18.14.2"
+    "node": "18.14.2",
+    "yarn": "4.0.0-rc.42",
+    "npm": "9.5.0"
   }
 }

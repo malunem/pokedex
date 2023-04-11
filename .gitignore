@@ -5,3 +5,10 @@ src/gatsby-types.d.ts
 cypress/screenshots/
 cypress/videos/
 coverage/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
