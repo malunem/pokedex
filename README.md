@@ -81,7 +81,7 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
   All the previous operations can be executed with `npm` outside Docker. Just be sure to use the right version of `npm`, by installing it globally or locally with `Volta` or `nvm`. 
   The npm version is pinned in package.json under `volta`.
   
-  Here are the main scripts you can use after you have installed all dependencies with `npm ci`:
+  Here are the main scripts you can use after you have installed all dependencies with `npm install`:
   
   - `npm run dev`: run gatsby develop on http://localhost:8000    
   - `npm run prod`: run gatsby build on http://localhost:9000
