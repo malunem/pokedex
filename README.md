@@ -34,8 +34,9 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
     
     Navigate into the project root directory and run the command:
 
-    ```shell
-    docker compose up test --build --attach-dependencies
+    ```bash
+    # add flag --build if you modified code
+    docker compose up test
     ```
 
     This will execute:
@@ -44,14 +45,20 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
     - tsc (strict mode) - to verify that typescript compiles correctly
     - eslint (with AirBnb configs and some custom rules) - to ensure best practices and code quality
     - jest (with coverage report) - for unit tests on components
-    - cypress (running headlessly) - for end to end tests on pages
-      - gatsby develop will be runned as a dependency for cypress
+    
+    End to end tests can be run headlessly with an official Cypress Docker image with the command:
+
+    ```bash
+    # add flag --build if you modified code
+    docker compose up e2e
+    ```
 
     End to end tests could also be run with Cypress in browser:
     (this will also run the other tests)
 
     ```bash
-    docker compose -f docker-compose.yml -f cy-open.yml up test --build --attach-dependencies
+    # add flag --build if you modified code
+    docker compose -f docker-compose.yml -f cy-open.yml up e2e
     ```
 
     Please note that Cypress will report some accessibility issues checked with a11y: they are relative to ChakraUI Toast components and there is an [issue](https://github.com/chakra-ui/chakra-ui/issues/7324) open on their repo.
@@ -61,7 +68,8 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
     You can start a production build by running the following command. This will build the project for production after running the tests, only if they pass, and serve it on http://localhost:9000
 
     ```bash
-    docker compose up prod --build
+    # add flag --build if you modified code
+    docker compose up prod
     ```
 
 4.  **Deploy**

@@ -27,22 +27,20 @@ services:
     ports:
       - "9000:9000"
 
-  test-base:
+  test:
     container_name: pokedex-test
     build:
       context: .
       dockerfile: Dockerfile
       target: test
 
-  test:
+  e2e:
     # the Docker image to use from https://github.com/cypress-io/cypress-docker-images
     image: "cypress/included:12.3.0"
     container_name: pokedex-cypress
     depends_on:
       dev:
         condition: service_healthy
-      test-base:
-        condition: service_completed_successfully
     environment:
       # pass base url to test pointing at the web application
       - CYPRESS_baseUrl=http://dev:8000
