@@ -83,7 +83,7 @@ git clone git@github.com:malunem/pokedex.git && cd pokedex
   
   Here are the main scripts you can use after you have installed all dependencies with `npm install`:
   
-  - `npm run dev`: run gatsby develop on http://localhost:8000    
+  - `npm run develop`: run gatsby develop on http://localhost:8000    
   - `npm run prod`: run gatsby build on http://localhost:9000
   - `npm run build`: run gatsby build headlessly
   - `npm run test`: run base tests (prettier, compiler, linter, unit tests)
